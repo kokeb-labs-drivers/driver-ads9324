@@ -365,8 +365,8 @@ constexpr Result<Frame> DecodeFrame(const Config& c, std::span<const uint8_t> by
 // Table 7-12, 8 channels, group 0: AIN1 to AIN4 and AIN13 to AIN16.
 static_assert(FrameSlotChannel({.count = ChannelCount::Eight, .group = 0}, 4) == 12U);
 static_assert(FrameSlotChannel({.count = ChannelCount::Eight, .group = 1}, 0) == 4U);
-static_assert(ChannelSelCode({.count = ChannelCount::Four, .group = 1}) == 2U &&
-              ChannelSelCode({.count = ChannelCount::Eight, .group = 1}) == 4U);
+static_assert((ChannelSelCode({.count = ChannelCount::Four, .group = 1}) == 2U) &&
+              (ChannelSelCode({.count = ChannelCount::Eight, .group = 1}) == 4U));
 // Equation 7: PRBS 0x1F gives the mask 0x1FFF.
 static_assert(DerandomizeMask(0x1F) == 0x1FFFU);
 
