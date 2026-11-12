@@ -1072,11 +1072,11 @@ constexpr int16_t GainCorrectionFor(int32_t expected_code, int32_t measured_code
   return static_cast<int16_t>(clamped);
 }
 
-static_assert(AverageFactor(AverageLength::X128) == 128U &&
-              AverageFactor(AverageLength::None) == 1U);
+static_assert((AverageFactor(AverageLength::X128) == 128U) &&
+              (AverageFactor(AverageLength::None) == 1U));
 static_assert(ConversionTimeUs(Config{}) == 2U);
-static_assert(OffsetCorrectionFor(0, 3) == -12 && OffsetCorrectionFor(0, 1000) == kOffsetMin);
-static_assert(GainCorrectionFor(32000, 32000) == 0 && GainCorrectionFor(32768, 32000) == 1573);
+static_assert((OffsetCorrectionFor(0, 3) == -12) && (OffsetCorrectionFor(0, 1000) == kOffsetMin));
+static_assert((GainCorrectionFor(32000, 32000) == 0) && (GainCorrectionFor(32768, 32000) == 1573));
 
 /**
  * @brief Full-scale voltage of a range in millivolts.
@@ -1185,6 +1185,8 @@ constexpr uint8_t FrameSlotChannel(const ChannelSelect& select, uint32_t slot) n
       channel = slot + 4U;
     } else if (slot >= 4U) {
       channel = slot + 8U;
+    } else {
+      channel = slot; // group 0, slots 0 to 3: AIN1 to AIN4
     }
     break;
   case ChannelCount::Four:

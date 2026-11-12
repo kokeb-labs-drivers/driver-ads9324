@@ -365,7 +365,7 @@ constexpr bool IsCommon(uint8_t address) noexcept {
 constexpr bool IsChannel(uint8_t address) noexcept {
   // PGA_CONFIG (0x08) to TP_AIN8 (0x36) is one run of registers, then GEN_CFG5
   // and DWC_FLAG.
-  return ((address >= kPgaConfig) && (address < kTp + 8U)) || (address == kCorrection) ||
+  return ((address >= kPgaConfig) && (address < (kTp + 8U))) || (address == kCorrection) ||
          (address == kDwcFlag);
 }
 
@@ -463,16 +463,16 @@ static_assert(ResetValue(Bank::Ain9To16, kDwcHys) == 0U);
 static_assert(ResetValue(Bank::Ain9To16, kDwcHys + 1U) == 0xFF00U);
 // The reversed bank (section 8.3): AIN16 is local 0, AIN9 is local 7; both
 // banks round trip.
-static_assert(Locate(0).bank == Bank::Ain1To8 && Locate(0).local == 0U);
-static_assert(Locate(7).bank == Bank::Ain1To8 && Locate(7).local == 7U);
-static_assert(Locate(15).bank == Bank::Ain9To16 && Locate(15).local == 0U);
-static_assert(Locate(8).bank == Bank::Ain9To16 && Locate(8).local == 7U);
+static_assert((Locate(0).bank == Bank::Ain1To8) && (Locate(0).local == 0U));
+static_assert((Locate(7).bank == Bank::Ain1To8) && (Locate(7).local == 7U));
+static_assert((Locate(15).bank == Bank::Ain9To16) && (Locate(15).local == 0U));
+static_assert((Locate(8).bank == Bank::Ain9To16) && (Locate(8).local == 7U));
 static_assert(ChannelAt(Locate(11).bank, Locate(11).local) == 11U);
 // AIN15 (channel 14) is local 1: the high half of PGA_CONFIG at 0x08 (Table
 // 8-74).
-static_assert(PgaConfigAddress(Locate(14).local) == 0x08U && HalfShift(Locate(14).local) == 8U);
+static_assert((PgaConfigAddress(Locate(14).local) == 0x08U) && (HalfShift(Locate(14).local) == 8U));
 // AIN9 (channel 8) is local 7: OFS at 0x18, TP at 0x36 (Tables 8-72).
-static_assert(OffsetAddress(Locate(8).local) == 0x18U && TpAddress(Locate(8).local) == 0x36U);
+static_assert((OffsetAddress(Locate(8).local) == 0x18U) && (TpAddress(Locate(8).local) == 0x36U));
 static_assert(DwcHysAddress(Locate(8).local) == 0x2DU);
 
 /** @} */
