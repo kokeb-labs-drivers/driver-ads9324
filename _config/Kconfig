@@ -1,0 +1,46 @@
+# Kconfig for the ADS9324 driver. The root CMakeLists.txt registers it with ESP-IDF
+# (idf_component_register(... KCONFIG _config/Kconfig)), so `idf.py menuconfig` shows
+# "ADS9324 16-channel ADC". The values reach the code only through
+# inc/ads9324_kconfig.hpp; no public driver signature uses them.
+menuconfig ADS9324
+    bool "ADS9324 16-channel ADC"
+    default y
+    help
+      Defaults for ads9324::KconfigDefaults(). The driver itself does not
+      need Kconfig; outside ESP-IDF the same defaults come from Config{}.
+
+if ADS9324
+
+config ADS9324_CONVST_HZ
+    int "CONVST frequency (Hz)"
+    range 100000 1000000
+    default 100000
+    help
+      Sampling::convst_hz. The datasheet allows 100 kHz to 1 MHz.
+
+config ADS9324_WORD_24_BIT
+    bool "24-bit data words"
+    default n
+    help
+      DOUT_LENGTH. 16-bit words are the reset value; 24-bit words carry an extra byte
+      and cannot be combined with the output randomizer.
+
+config ADS9324_APPEND_DIAG
+    bool "Append the DIAG byte to every data frame"
+    default n
+    help
+      EN_DIAG_FLAG. The byte carries the window alert and the reset flag.
+
+config ADS9324_READY_ON_PIN
+    bool "Wait for results on the DRDY/ALARM pin"
+    default n
+    help
+      Sampling::ready. Needs the port's GpioGet() hook; without it the driver waits the
+      conversion time.
+
+config ADS9324_READY_TIMEOUT_US
+    int "Longest DRDY wait (us)"
+    range 1 200000
+    default 10000
+
+endif

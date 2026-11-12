@@ -1,0 +1,42 @@
+{
+  "name": "ads9324",
+  "cls": "ADS9324",
+  "calls": [
+    "EnsureInitialized",
+    "Deinitialize",
+    "Reset",
+    "Identify",
+    "ApplyConfig",
+    "SetInput",
+    "SetInterface",
+    "SetFilter",
+    "SetChannels",
+    "SetAlarm",
+    "SetReference",
+    "SetTestPattern",
+    "Convert",
+    "WaitDataReady",
+    "ReadFrame",
+    "MeasureOnce",
+    "ReadAlarmPin",
+    "ReadWindowFlags",
+    "ClearWindowFlags",
+    "RunAdcCalibration",
+    "DisableAdcCalibration",
+    "IsCalibrationBusy",
+    "PowerDown",
+    "Wake",
+    "ReadRegister",
+    "RunDataPathSelfTest"
+  ],
+  "sources": [
+    "inc/ads9324.hpp:public calls",
+    "inc/ads9324_spi_interface.hpp:SpiInterface"
+  ],
+  "bus": "SPI",
+  "base": "SpiInterface",
+  "hooks": [
+    "EnsureInitialized",
+    "Transfer"
+  ]
+}

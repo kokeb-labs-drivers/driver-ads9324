@@ -1,0 +1,20 @@
+---
+# How this repository was made from kokeb-labs/driver-template. The template's drift check
+# (tools/scaffold.py --check-drift, CI: kokeb-labs/ci-tools ru-template-drift) scaffolds the template again
+# with these arguments and compares the files it manages. List a file under `local` only when it differs on
+# purpose, with the reason.
+# template commit not a git repository: no first commit to match against the template
+template: unknown
+kind: "driver"
+name: "ads9324"
+bus: "spi"
+namespace: "ads9324"
+description: "C++20 driver for the TI ADS9324 16-channel, 16-bit, 1 MSPS simultaneous-sampling SAR ADC with integrated PGA and SPI interface"
+include_root: null
+org: "kokeb-labs-drivers"
+repo: "driver-ads9324"
+author: "The driver-ads9324 authors"
+license: "MIT"
+datasheet: "https://www.ti.com/lit/ds/symlink/ads9324.pdf"
+platforms: [host, esp32]
+local: []
