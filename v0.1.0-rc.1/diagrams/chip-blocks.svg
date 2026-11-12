@@ -1,0 +1,160 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="705" viewBox="0 0 1200 705" role="img" aria-labelledby="chip-blocks-title chip-blocks-desc" font-family="Inter, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+<title id="chip-blocks-title">Inside the ADS9324</title>
+<desc id="chip-blocks-desc">Block diagram of the ADS9324: its function blocks, how they connect and which package pins reach each block.</desc>
+<defs><marker id="fk-arrow-rail" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#8893A2"/></marker></defs>
+<rect x="0.5" y="0.5" width="1199" height="704" rx="16" fill="#FFFFFF" stroke="#E2E7EE"/>
+<text x="32" y="44" font-size="12.5" font-weight="700" letter-spacing="1.2" fill="#7A360E">HARDWARE</text>
+<text x="32" y="77.3" font-size="26" font-weight="700" fill="#0E1726">Inside the ADS9324</text>
+<text x="32" y="103.8" font-size="15" fill="#566070">Function blocks and their links, from the datasheet's block diagram (7.2 Functional Block Diagram, p. 24). Pins on the edge carry their package</text>
+<text x="32" y="125.5" font-size="15" fill="#566070">number.</text>
+<rect x="32" y="141.6" width="1136" height="1" fill="#E2E7EE"/>
+<rect x="152" y="159.6" width="904" height="440" rx="14" fill="#F1F4F8" stroke="#CBD5E1" stroke-width="1.2"/>
+<path d="M159 271.6 L192 271.6" fill="none" stroke="#A21CAF" stroke-width="1.8"/>
+<path d="M159 295.6 L192 295.6" fill="none" stroke="#A21CAF" stroke-width="1.8"/>
+<path d="M159 319.6 L192 319.6" fill="none" stroke="#A21CAF" stroke-width="1.8"/>
+<path d="M159 343.6 L192 343.6" fill="none" stroke="#A21CAF" stroke-width="1.8"/>
+<path d="M159 463.6 L192 463.6" fill="none" stroke="#A21CAF" stroke-width="1.8"/>
+<path d="M159 487.6 L192 487.6" fill="none" stroke="#0B7A72" stroke-width="1.8"/>
+<path d="M159 511.6 L192 511.6" fill="none" stroke="#A21CAF" stroke-width="1.8"/>
+<path d="M159 535.5 L192 535.5" fill="none" stroke="#A21CAF" stroke-width="1.8"/>
+<path d="M1049 279.6 L1016 279.6" fill="none" stroke="#7C3AED" stroke-width="1.8"/>
+<path d="M1049 303.6 L1016 303.6" fill="none" stroke="#7C3AED" stroke-width="1.8"/>
+<path d="M1049 327.6 L1016 327.6" fill="none" stroke="#2563EB" stroke-width="1.8"/>
+<path d="M1049 455.6 L1016 455.6" fill="none" stroke="#2563EB" stroke-width="1.8"/>
+<path d="M1049 479.6 L1016 479.6" fill="none" stroke="#2563EB" stroke-width="1.8"/>
+<path d="M1049 503.6 L1016 503.6" fill="none" stroke="#2563EB" stroke-width="1.8"/>
+<path d="M1049 527.5 L1016 527.5" fill="none" stroke="#0B7A72" stroke-width="1.8"/>
+<path d="M1049 551.5 L1016 551.5" fill="none" stroke="#0B7A72" stroke-width="1.8"/>
+<path d="M324 303.6 L420 303.6" fill="none" stroke="#8893A2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#fk-arrow-rail)"/>
+<path d="M324 503.6 L330 503.6 Q336 503.6 336 497.6 L336 367.6 Q336 359.6 344 359.6 L420 359.6" fill="none" stroke="#8893A2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#fk-arrow-rail)"/>
+<path d="M556 303.6 L652 303.6" fill="none" stroke="#8893A2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#fk-arrow-rail)"/>
+<path d="M788 303.6 L884 303.6" fill="none" stroke="#8893A2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#fk-arrow-rail)"/>
+<path d="M720 395.6 L720 435.6" fill="none" stroke="#8893A2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#fk-arrow-rail)"/>
+<path d="M884 503.6 L878 503.6 Q872 503.6 872 497.6 L872 367.6 Q872 359.6 864 359.6 L788 359.6" fill="none" stroke="#8893A2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#fk-arrow-rail)"/>
+<rect x="192" y="223.6" width="128" height="168" rx="10" fill="#E6F6F4" stroke="#0B7A72" stroke-width="1.4"/>
+<rect x="192" y="231.6" width="4" height="152" rx="2" fill="#0B7A72"/>
+<rect x="424" y="223.6" width="128" height="168" rx="10" fill="#F3EEFF" stroke="#7C3AED" stroke-width="1.4"/>
+<rect x="424" y="231.6" width="4" height="152" rx="2" fill="#7C3AED"/>
+<rect x="192" y="439.6" width="128" height="128" rx="10" fill="#FFF5E3" stroke="#C26A05" stroke-width="1.4"/>
+<rect x="192" y="447.6" width="4" height="112" rx="2" fill="#C26A05"/>
+<rect x="656" y="223.6" width="128" height="168" rx="10" fill="#EAF2FF" stroke="#2563EB" stroke-width="1.4"/>
+<rect x="656" y="231.6" width="4" height="152" rx="2" fill="#2563EB"/>
+<rect x="888" y="223.6" width="128" height="168" rx="10" fill="#EAF2FF" stroke="#2563EB" stroke-width="1.4"/>
+<rect x="888" y="231.6" width="4" height="152" rx="2" fill="#2563EB"/>
+<rect x="888" y="439.6" width="128" height="128" rx="10" fill="#EAF2FF" stroke="#2563EB" stroke-width="1.4"/>
+<rect x="888" y="447.6" width="4" height="112" rx="2" fill="#2563EB"/>
+<rect x="656" y="439.6" width="128" height="128" rx="10" fill="#FFF5E3" stroke="#C26A05" stroke-width="1.4"/>
+<rect x="656" y="447.6" width="4" height="112" rx="2" fill="#C26A05"/>
+<rect x="145" y="264.6" width="14" height="14" rx="3" fill="#FDF0FF" stroke="#A21CAF" stroke-width="1.4"/>
+<rect x="145" y="288.6" width="14" height="14" rx="3" fill="#FDF0FF" stroke="#A21CAF" stroke-width="1.4"/>
+<rect x="145" y="312.6" width="14" height="14" rx="3" fill="#FDF0FF" stroke="#A21CAF" stroke-width="1.4"/>
+<rect x="145" y="336.6" width="14" height="14" rx="3" fill="#FDF0FF" stroke="#A21CAF" stroke-width="1.4"/>
+<rect x="145" y="456.6" width="14" height="14" rx="3" fill="#FDF0FF" stroke="#A21CAF" stroke-width="1.4"/>
+<rect x="145" y="480.6" width="14" height="14" rx="3" fill="#E6F6F4" stroke="#0B7A72" stroke-width="1.4"/>
+<rect x="145" y="504.6" width="14" height="14" rx="3" fill="#FDF0FF" stroke="#A21CAF" stroke-width="1.4"/>
+<rect x="145" y="528.5" width="14" height="14" rx="3" fill="#FDF0FF" stroke="#A21CAF" stroke-width="1.4"/>
+<rect x="1049" y="272.6" width="14" height="14" rx="3" fill="#F3EEFF" stroke="#7C3AED" stroke-width="1.4"/>
+<rect x="1049" y="296.6" width="14" height="14" rx="3" fill="#F3EEFF" stroke="#7C3AED" stroke-width="1.4"/>
+<rect x="1049" y="320.6" width="14" height="14" rx="3" fill="#EAF2FF" stroke="#2563EB" stroke-width="1.4"/>
+<rect x="1049" y="448.6" width="14" height="14" rx="3" fill="#EAF2FF" stroke="#2563EB" stroke-width="1.4"/>
+<rect x="1049" y="472.6" width="14" height="14" rx="3" fill="#EAF2FF" stroke="#2563EB" stroke-width="1.4"/>
+<rect x="1049" y="496.6" width="14" height="14" rx="3" fill="#EAF2FF" stroke="#2563EB" stroke-width="1.4"/>
+<rect x="1049" y="520.5" width="14" height="14" rx="3" fill="#E6F6F4" stroke="#0B7A72" stroke-width="1.4"/>
+<rect x="1049" y="544.5" width="14" height="14" rx="3" fill="#E6F6F4" stroke="#0B7A72" stroke-width="1.4"/>
+<text x="168" y="184.6" font-size="13" font-weight="700" fill="#334155">ADS9324</text>
+<text x="245.1" y="184.6" font-size="12" fill="#334155">VQFN-64</text>
+<text x="212" y="250.3" font-size="15" font-weight="700" fill="#0B5F59">Input</text>
+<text x="212" y="269.8" font-size="15" font-weight="700" fill="#0B5F59">clamps and</text>
+<text x="212" y="289.3" font-size="15" font-weight="700" fill="#0B5F59">PGA</text>
+<text x="212" y="314.1" font-size="13" fill="#2B3442">1 MΩ inputs, 5</text>
+<text x="212" y="333" font-size="13" fill="#2B3442">ranges,</text>
+<text x="212" y="351.9" font-size="13" fill="#2B3442">per-channel</text>
+<text x="212" y="370.7" font-size="13" fill="#2B3442">gain</text>
+<text x="444" y="250.3" font-size="15" font-weight="700" fill="#5B21B6">16 SAR</text>
+<text x="444" y="269.8" font-size="15" font-weight="700" fill="#5B21B6">ADCs</text>
+<text x="444" y="294.6" font-size="13" fill="#2B3442">simultaneous</text>
+<text x="444" y="313.5" font-size="13" fill="#2B3442">sampling, 1</text>
+<text x="444" y="332.4" font-size="13" fill="#2B3442">MSPS each</text>
+<text x="212" y="466.3" font-size="15" font-weight="700" fill="#8A3C0B">Reference</text>
+<text x="212" y="491.2" font-size="13" fill="#2B3442">4.096 V</text>
+<text x="212" y="510" font-size="13" fill="#2B3442">internal, or</text>
+<text x="212" y="528.9" font-size="13" fill="#2B3442">external on</text>
+<text x="212" y="547.7" font-size="13" fill="#2B3442">REFIO</text>
+<text x="676" y="250.3" font-size="15" font-weight="700" fill="#1E429F">Digital</text>
+<text x="676" y="269.8" font-size="15" font-weight="700" fill="#1E429F">filters and</text>
+<text x="676" y="289.3" font-size="15" font-weight="700" fill="#1E429F">calibration</text>
+<text x="676" y="314.1" font-size="13" fill="#2B3442">offset, gain,</text>
+<text x="676" y="333" font-size="13" fill="#2B3442">phase, FIR,</text>
+<text x="676" y="351.9" font-size="13" fill="#2B3442">averages</text>
+<text x="908" y="250.3" font-size="15" font-weight="700" fill="#1E429F">Data</text>
+<text x="908" y="269.8" font-size="15" font-weight="700" fill="#1E429F">interface</text>
+<text x="908" y="294.6" font-size="13" fill="#2B3442">1, 2, 4 or 8</text>
+<text x="908" y="313.5" font-size="13" fill="#2B3442">lanes, 16 or</text>
+<text x="908" y="332.4" font-size="13" fill="#2B3442">24 bit</text>
+<text x="908" y="466.3" font-size="15" font-weight="700" fill="#1E429F">Registers</text>
+<text x="908" y="485.8" font-size="15" font-weight="700" fill="#1E429F">and control</text>
+<text x="908" y="510.7" font-size="13" fill="#2B3442">three banks,</text>
+<text x="908" y="529.5" font-size="13" fill="#2B3442">24-bit frames,</text>
+<text x="908" y="548.4" font-size="13" fill="#2B3442">CONVST</text>
+<text x="676" y="466.3" font-size="15" font-weight="700" fill="#8A3C0B">Window</text>
+<text x="676" y="485.8" font-size="15" font-weight="700" fill="#8A3C0B">comparator</text>
+<text x="676" y="505.3" font-size="15" font-weight="700" fill="#8A3C0B">and alarm</text>
+<text x="676" y="530.2" font-size="13" fill="#2B3442">per-channel</text>
+<text x="676" y="549" font-size="13" fill="#2B3442">limits</text>
+<text x="138" y="276.1" font-size="12.5" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" text-anchor="end" fill="#0E1726">AIN1P  57</text>
+<text x="138" y="300.1" font-size="12.5" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" text-anchor="end" fill="#0E1726">AIN1M  58</text>
+<text x="138" y="324.1" font-size="12.5" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" text-anchor="end" fill="#0E1726">AIN16P  23</text>
+<text x="138" y="348.1" font-size="12.5" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" text-anchor="end" fill="#0E1726">AIN16M  24</text>
+<text x="138" y="468.1" font-size="12.5" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" text-anchor="end" fill="#0E1726">REFIO  54</text>
+<text x="138" y="492.1" font-size="12.5" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" text-anchor="end" fill="#0E1726">REFSEL  31</text>
+<text x="138" y="516" font-size="12.5" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" text-anchor="end" fill="#0E1726">REFCAPA  52</text>
+<text x="138" y="540" font-size="12.5" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" text-anchor="end" fill="#0E1726">REFCAPB  29</text>
+<text x="1070" y="284.1" font-size="12.5" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" fill="#0E1726">D0*  46</text>
+<text x="1070" y="308.1" font-size="12.5" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" fill="#0E1726">D7*  39</text>
+<text x="1070" y="332.1" font-size="12.5" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" fill="#0E1726">SDOUT  38</text>
+<text x="1070" y="460.1" font-size="12.5" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" fill="#0E1726">CS  35</text>
+<text x="1070" y="484.1" font-size="12.5" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" fill="#0E1726">SCLK  37</text>
+<text x="1070" y="508.1" font-size="12.5" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" fill="#0E1726">SDI  36</text>
+<text x="1070" y="532" font-size="12.5" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" fill="#0E1726">RESET  32</text>
+<text x="1070" y="556" font-size="12.5" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" fill="#0E1726">CONVST  50</text>
+<circle cx="192" cy="271.6" r="3" fill="#A21CAF"/>
+<circle cx="192" cy="295.6" r="3" fill="#A21CAF"/>
+<circle cx="192" cy="319.6" r="3" fill="#A21CAF"/>
+<circle cx="192" cy="343.6" r="3" fill="#A21CAF"/>
+<circle cx="192" cy="463.6" r="3" fill="#A21CAF"/>
+<circle cx="192" cy="487.6" r="3" fill="#0B7A72"/>
+<circle cx="192" cy="511.6" r="3" fill="#A21CAF"/>
+<circle cx="192" cy="535.5" r="3" fill="#A21CAF"/>
+<circle cx="1016" cy="279.6" r="3" fill="#7C3AED"/>
+<circle cx="1016" cy="303.6" r="3" fill="#7C3AED"/>
+<circle cx="1016" cy="327.6" r="3" fill="#2563EB"/>
+<circle cx="1016" cy="455.6" r="3" fill="#2563EB"/>
+<circle cx="1016" cy="479.6" r="3" fill="#2563EB"/>
+<circle cx="1016" cy="503.6" r="3" fill="#2563EB"/>
+<circle cx="1016" cy="527.5" r="3" fill="#0B7A72"/>
+<circle cx="1016" cy="551.5" r="3" fill="#0B7A72"/>
+<rect x="345.6" y="293.6" width="52.9" height="20" rx="10" fill="#FFFFFF"/>
+<text x="372" y="307.9" font-size="12" font-weight="500" text-anchor="middle" fill="#566070">analog</text>
+<rect x="355.8" y="349.6" width="44.4" height="20" rx="10" fill="#FFFFFF"/>
+<text x="378" y="363.9" font-size="12" font-weight="500" text-anchor="middle" fill="#566070">VREF</text>
+<rect x="579.4" y="293.6" width="49.2" height="20" rx="10" fill="#FFFFFF"/>
+<text x="604" y="307.9" font-size="12" font-weight="500" text-anchor="middle" fill="#566070">codes</text>
+<rect x="809.4" y="293.6" width="53.3" height="20" rx="10" fill="#FFFFFF"/>
+<text x="836" y="307.9" font-size="12" font-weight="500" text-anchor="middle" fill="#566070">results</text>
+<rect x="695.4" y="405.6" width="49.2" height="20" rx="10" fill="#FFFFFF"/>
+<text x="720" y="419.9" font-size="12" font-weight="500" text-anchor="middle" fill="#566070">codes</text>
+<rect x="799.7" y="349.6" width="60.6" height="20" rx="10" fill="#FFFFFF"/>
+<text x="830" y="363.9" font-size="12" font-weight="500" text-anchor="middle" fill="#566070">settings</text>
+<text x="32" y="621.5" font-size="12.5" fill="#566070">* Not confirmed in the datasheet: pin D7: the data sheet does not say how to terminate an unused data lane; pin D0: the data sheet does not say how to terminate an unused data</text>
+<text x="32" y="639.5" font-size="12.5" fill="#566070">lane.</text>
+<rect x="32" y="658.7" width="14" height="14" rx="4" fill="#EAF2FF" stroke="#2563EB" stroke-width="1.4"/>
+<text x="54" y="670.3" font-size="12.5" fill="#566070">bus</text>
+<rect x="100.9" y="658.7" width="14" height="14" rx="4" fill="#E6F6F4" stroke="#0B7A72" stroke-width="1.4"/>
+<text x="122.9" y="670.3" font-size="12.5" fill="#566070">digital in</text>
+<rect x="199.3" y="658.7" width="14" height="14" rx="4" fill="#F3EEFF" stroke="#7C3AED" stroke-width="1.4"/>
+<text x="221.3" y="670.3" font-size="12.5" fill="#566070">digital in/out</text>
+<rect x="322.6" y="658.7" width="14" height="14" rx="4" fill="#FDF0FF" stroke="#A21CAF" stroke-width="1.4"/>
+<text x="344.6" y="670.3" font-size="12.5" fill="#566070">analog</text>
+<path d="M410.6 664.9L440.6 664.9" fill="none" stroke="#8893A2" stroke-width="1.6" marker-end="url(#fk-arrow-rail)"/>
+<text x="454.6" y="670.3" font-size="12.5" fill="#566070">signal or data between blocks</text>
+</svg>

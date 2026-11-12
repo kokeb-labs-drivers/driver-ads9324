@@ -1,0 +1,228 @@
+---
+# The vendor documents this driver was written against (handbook ADR-0019), and where the driver relies on them.
+# Never commit a PDF: `sha256` identifies the exact file that was used, so a reader can confirm they hold the same
+# revision. `pdf` is a stable direct link when the vendor publishes one (page links are built from it, adding
+# `page_offset` when the printed page numbers differ from the PDF's); otherwise readers download from `url`.
+#
+# The README card, docs/datasheet.md and the "Datasheet" box on each page are generated from this file by
+# tools/docs/generators/datasheet.py (`kokeb-docs gen`).
+documents:
+  - id: ds
+    vendor: Texas Instruments
+    title: ADS9324 16-Channel, 16-Bit, 1MSPS, Simultaneous-Sampling SAR ADC With Integrated Analog Front-End
+    kind: Datasheet
+    number: SBASB22
+    revision: "-"
+    date: 2025-12
+    url: https://www.ti.com/product/ADS9324
+    pdf: https://www.ti.com/lit/ds/symlink/ads9324.pdf
+    page_offset: 0
+    sha256: bf4ce5824931912b9d3b2a5450907f8ec445aa3ec1af4418acc0c233d98b8d4c
+
+# One row per thing the driver takes from a document: the datasheet's own section names and printed page
+# numbers, the driver API that implements it, and the docs pages that explain it (file names in docs/).
+topics:
+  - topic: Features, channel count and the 16 simultaneous samples
+    doc: ds
+    section: 1 Features; 3 Description
+    page: 1
+    driver: "`Config`, `reg::kChannelCount`"
+    docs: [index, hardware]
+  - topic: Pins, package and the data lanes
+    doc: ds
+    section: 4 Pin Configuration and Functions
+    page: 3
+    driver: "`CtrlPin`, `CaptureLanes()`, `GpioSet()`, `GpioGet()`"
+    docs: [hardware, porting, quickstart]
+  - topic: Absolute maximum ratings
+    doc: ds
+    section: 5.1 Absolute Maximum Ratings
+    page: 5
+    driver: "`Supply` (documented limits only, no register)"
+    docs: [hardware]
+  - topic: Supplies, reference and input ranges
+    doc: ds
+    section: 5.3 Recommended Operating Conditions
+    page: 6
+    driver: "`Supply`, `Validate()`, `RangeMillivolts()`"
+    docs: [hardware, configuration]
+  - topic: Electrical characteristics, power-up and reset times
+    doc: ds
+    section: 5.5 Electrical Characteristics
+    page: 7
+    driver: "`kPowerUpMs`, `kResetMs`, `kInternalVrefMv`"
+    docs: [hardware, contract]
+  - topic: SPI and CONVST timing
+    doc: ds
+    section: 5.6 Timing Requirements; 5.7 Switching Characteristics
+    page: 11
+    driver: "`kMaxClockHz`, `kMinCsHighNs`, `kConvstMinHz`, `kConvstMaxHz`"
+    docs: [porting, hardware]
+  - topic: Timing diagrams, DRDY and the data frame
+    doc: ds
+    section: 5.8 Timing Diagrams
+    page: 12
+    driver: "`WaitDataReady()`, `ReadFrame()`, `ConversionTimeUs()`"
+    docs: [porting, contract]
+  - topic: Analog inputs and the input clamps
+    doc: ds
+    section: 7.3.1 Analog Inputs; 7.3.2 Input Clamp Protection Circuit
+    page: 25
+    driver: "`Input`, `Input::type`"
+    docs: [configuration, hardware]
+  - topic: PGA, input ranges, common-mode range and bandwidth
+    doc: ds
+    section: 7.3.4 Programmable Gain Amplifier (PGA), Tables 7-1 and 7-2
+    page: 26
+    driver: "`Input::range`, `Input::bandwidth`, `RangeMillivolts()`"
+    docs: [configuration]
+  - topic: ADC transfer function and output codes
+    doc: ds
+    section: 7.3.5 ADC Transfer Function
+    page: 27
+    driver: "`WireToCode()`, `CodeToMicrovolts()`, `Interface::format`"
+    docs: [configuration, api-guide]
+  - topic: Reference selection
+    doc: ds
+    section: 7.3.6 Reference, Table 7-3
+    page: 28
+    driver: "`ReferenceSource`, `SetReference()`"
+    docs: [configuration, hardware]
+  - topic: Open-wire safe mode
+    doc: ds
+    section: 7.3.7 Open Wire Safe Mode
+    page: 30
+    driver: "`InputType::SingleEndedOpenWireSafe`"
+    docs: [configuration, limitations]
+  - topic: System offset and gain calibration
+    doc: ds
+    section: 7.3.8 System Offset Calibration; 7.3.9 System Gain Calibration
+    page: 31
+    driver: "`Correction`, `OffsetCorrectionFor()`, `GainCorrectionFor()`"
+    docs: [configuration]
+  - topic: ADC gain and offset error calibration
+    doc: ds
+    section: 7.3.10 ADC Gain and Offset Error Calibration
+    page: 32
+    driver: "`RunAdcCalibration()`, `DisableAdcCalibration()`, `IsCalibrationBusy()`"
+    docs: [api-guide, contract]
+  - topic: Digital filters and the system phase calibration
+    doc: ds
+    section: 7.3.11 Digital Filter; 7.3.11.1 System Phase Calibration
+    page: 34
+    driver: "`Filter`, `Input::phase_delay`, `SetFilter()`"
+    docs: [configuration, api-guide]
+  - topic: Block average, moving average and FIR filters
+    doc: ds
+    section: 7.3.11.2 to 7.3.11.4
+    page: 35
+    driver: "`Filter`, `AverageFactor()`, `FirDecimation()`, `ResultsPerOutput()`"
+    docs: [configuration, limitations]
+  - topic: Digital window comparator
+    doc: ds
+    section: 7.3.12 Digital Window Comparator
+    page: 39
+    driver: "`Window`, `ReadWindowFlags()`, `ClearWindowFlags()`"
+    docs: [api-guide, configuration]
+  - topic: Alarm modes and the DRDY/ALARM pin
+    doc: ds
+    section: 7.3.13 Alarm Modes, Table 7-10
+    page: 41
+    driver: "`Alarm`, `SetAlarm()`, `ReadAlarmPin()`"
+    docs: [api-guide, configuration, hardware]
+  - topic: "Data interface: lanes, word length and channel modes"
+    doc: ds
+    section: 7.3.14 Data Interface; 7.3.14.1 ADC Channel Modes, Table 7-12
+    page: 42
+    driver: "`Interface`, `ChannelSelect`, `FrameChannels()`, `FrameBytes()`, `SetChannels()`"
+    docs: [configuration, architecture, porting]
+  - topic: Daisy chain (not supported in v1)
+    doc: ds
+    section: 7.3.14.2 Daisy Chain
+    page: 43
+    driver: "`DaisyChain`, `Error::Unsupported`"
+    docs: [limitations]
+  - topic: Diagnostic byte and the randomizer
+    doc: ds
+    section: 7.3.14.3 Diagnostic Flags; 7.3.14.4 ADC Output Data Randomizer
+    page: 44
+    driver: "`Interface::append_diag`, `Interface::randomize`, `DerandomizeMask()`"
+    docs: [configuration, contract]
+  - topic: Test patterns
+    doc: ds
+    section: 7.3.14.5 Test Patterns for Data Interface, Table 7-14
+    page: 47
+    driver: "`TestPattern`, `SetTestPattern()`, `RunDataPathSelfTest()`"
+    docs: [api-guide, testing]
+  - topic: Output drive strength and output delay
+    doc: ds
+    section: 7.3.14.6 Digital Output Drive Strength Control; 7.3.14.7 Digital Output Delay Adjustment
+    page: 48
+    driver: "`Interface::delay_ns`, `Interface::drive`"
+    docs: [configuration, porting]
+  - topic: Reset
+    doc: ds
+    section: 7.4.1 Reset
+    page: 49
+    driver: "`Reset()`, `CtrlPin::Reset`, `kResetPulseUs`"
+    docs: [hardware, troubleshooting]
+  - topic: Normal operation and standby
+    doc: ds
+    section: 7.4.2 Normal Operation; 7.4.3 Standby Mode
+    page: 49
+    driver: "`PowerDown()`, `Wake()`, `IsPoweredDown()`"
+    docs: [api-guide, contract]
+  - topic: Register write and read frames
+    doc: ds
+    section: 7.5 Programming; 7.5.1 Register Write Operation; 7.5.2 Register Read Operation
+    page: 50
+    driver: "`SpiInterface`, `detail::RegisterBus`, `ReadRegister()`"
+    docs: [architecture, porting]
+  - topic: Initialization example, single lane on SDOUT
+    doc: ds
+    section: 7.5.3 Initialization Example - Single Lane Mode on SDOUT
+    page: 51
+    driver: "`EnsureInitialized()`, `Config{}`"
+    docs: [quickstart, architecture]
+  - topic: Common registers
+    doc: ds
+    section: 8.1 ADS93xx Common Registers
+    page: 53
+    driver: "`inc/ads9324_registers.hpp`, `Identify()`, `Error::DeviceIdMismatch`"
+    docs: [architecture, configuration]
+  - topic: Channel registers AIN1 to AIN8
+    doc: ds
+    section: 8.2 AIN1 - AIN8 Channel Registers
+    page: 64
+    driver: "`reg::Locate()`, `SetInput()`"
+    docs: [architecture, configuration]
+  - topic: Channel registers AIN9 to AIN16 (reversed order)
+    doc: ds
+    section: 8.3 AIN9 - AIN16 Channel Registers
+    page: 86
+    driver: "`reg::Locate()`, `reg::ChannelAt()`"
+    docs: [architecture, limitations]
+  - topic: Typical application and input filter
+    doc: ds
+    section: 9.2 Typical Application, Figures 9-1 and 9-2
+    page: 106
+    driver: "-"
+    docs: [hardware]
+  - topic: Power-supply decoupling
+    doc: ds
+    section: 9.3 Power Supply Recommendations, Figure 9-4
+    page: 109
+    driver: "`Supply`"
+    docs: [hardware]
+  - topic: Layout
+    doc: ds
+    section: 9.4 Layout
+    page: 109
+    driver: "-"
+    docs: [hardware]
+  - topic: Package outline and ordering
+    doc: ds
+    section: 12 Mechanical, Packaging, and Orderable Information
+    page: 112
+    driver: "-"
+    docs: [hardware]
