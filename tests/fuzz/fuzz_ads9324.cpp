@@ -394,6 +394,7 @@ void Call(Driver& d, FullPort& port, Input& in, bool& faults) {
   Config c = d.GetConfig();
   const Config before = c;
   const uint32_t calibrations = chip.calibrations;
+  const bool cal_in_flight = chip.Calibrating(); // one started earlier may end in this call
   const uint32_t sysref = chip.sysref_edges;
   const bool derandomize = !faults && before.interface.randomize;
   Error err = Error::Ok;
@@ -490,7 +491,7 @@ void Call(Driver& d, FullPort& port, Input& in, bool& faults) {
   }
   if ((before.filter.kind != ads9324::FilterKind::None) &&
       (d.GetConfig().filter.kind != ads9324::FilterKind::None)) {
-    FUZZ_CHECK(chip.calibrations == calibrations); // F6
+    FUZZ_CHECK(cal_in_flight || (chip.calibrations == calibrations)); // F6
   }
   // Only the fields that reach DIG_FILTER count: the length is for the averages, `fir` for the FIR.
   const ads9324::Filter& now = d.GetConfig().filter;

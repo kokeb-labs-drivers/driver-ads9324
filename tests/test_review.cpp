@@ -1,7 +1,7 @@
 /**
  * @file test_review.cpp
  * @brief Tests that pin the reply position, reply validity, unseen resets, result pulses and
- * conversion time, plus the failure paths a mutation run showed untested (R01 to R23).
+ * conversion time, plus the failure paths a mutation run showed untested (R01 to R24).
  */
 #include <cstdint>
 
@@ -362,4 +362,22 @@ TEST_CASE("R21 after a reset the data is on D7 to D0: a readout on SDOUT is not 
   rig.Chip().Delay(31'000);
   const auto f = rig.drv.MeasureOnce();
   CHECK(!f.ok());
+}
+
+TEST_CASE("R22 a continuous-mode calibration is over when RunAdcCalibration returns (fuzz crash)") {
+  Config c{};
+  c.calibration.trigger = CalibrationTrigger::Continuous;
+  c.calibration.mode = CalibrationMode::Gain;
+  c.test_pattern[1].enabled = true; // the stuck-frame check is off, an idle frame would pass
+  Rig rig(c);
+  REQUIRE(rig.Init());
+  const auto cal = rig.drv.RunAdcCalibration();
+  CHECK_EQ(cal.error, Error::Ok);
+  REQUIRE(cal.ok());
+  CHECK(!rig.Chip().Calibrating());
+  CHECK_EQ(rig.Chip().calibrations, 1U); // finished, not started by the next CONVST pulse
+  const auto f = rig.drv.MeasureOnce();
+  REQUIRE(f.ok());
+  CHECK_EQ(f.value.raw[0], rig.Chip().sent_raw[0]);
+  CHECK(!rig.Chip().Calibrating());
 }

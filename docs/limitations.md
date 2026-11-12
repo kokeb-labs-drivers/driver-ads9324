@@ -35,6 +35,11 @@ each device's SDOUT to the next one's SDI. The driver leaves it out of version 1
 
 ## Behaviours to know
 
+- **Continuous-mode calibration needs a running CONVST.** `CalibrationTrigger::Continuous` waits 100,000 CONVST
+  periods (Table 7-7) and then reads CALIB_BUSY_FLAG; the chip counts the periods only while CONVST toggles, so a
+  timer must drive CONVST during the wait. With no CONVST the calibration starts at the next pulse and the data
+  after it is not valid until it ends. `CalibrationTrigger::SingleShot` needs no timer.
+
 - **The randomizer's XOR_BITS_CTL code.** The register table gives 0x00F1; a note in the datasheet says 0x00C1. The
   driver writes 0x00F1 and only that value or 0x0000. If a bench read shows a chip that wants the other
   value, change `reg::kXorBitsRandomizer` and nothing else.

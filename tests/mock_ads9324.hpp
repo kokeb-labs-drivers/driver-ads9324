@@ -56,13 +56,15 @@ struct Knobs {
   bool avg_gate_required{true};      ///< A31: filters work only with AVG_MODE_OVR_EN and AVG_MODE.
   bool int_trig_shared{true};        ///< A35: INT_TRIG_MODE is also the oversampling clock.
   uint32_t cal_busy_us{125'000};     ///< A36: single-shot calibration time.
-  bool cal_at_power_up{false};       ///< A38: a calibration is running after power-up.
-  bool cal_needs_high_end{true};     ///< A39: single-shot calibration needs CONVST to end high.
-  bool standby_retains{true};        ///< A40: registers survive standby.
-  bool alrm_mask_one_masks{true};    ///< A41: a set ALRM_MASK bit leaves the source out.
-  uint32_t ref_settle_us{30'000};    ///< A44: reference switch settle time.
-  uint32_t data_valid_us{0};         ///< A48: a result is lost after this long (0: never).
-  uint32_t convst_min_ns{50};        ///< A46: shortest CONVST pulse (informational).
+  bool free_running_convst{
+      true}; ///< The board drives CONVST by a timer: a continuous-mode calibration runs at once.
+  bool cal_at_power_up{false};    ///< A38: a calibration is running after power-up.
+  bool cal_needs_high_end{true};  ///< A39: single-shot calibration needs CONVST to end high.
+  bool standby_retains{true};     ///< A40: registers survive standby.
+  bool alrm_mask_one_masks{true}; ///< A41: a set ALRM_MASK bit leaves the source out.
+  uint32_t ref_settle_us{30'000}; ///< A44: reference switch settle time.
+  uint32_t data_valid_us{0};      ///< A48: a result is lost after this long (0: never).
+  uint32_t convst_min_ns{50};     ///< A46: shortest CONVST pulse (informational).
   // Faults.
   int fail_transfer{-1};           ///< Fail the transfer with this index; -1 never.
   bool fail_after_delivery{false}; ///< The failed transfer reached the chip first (frame decoded).
@@ -173,7 +175,7 @@ public:
   /// Time passes.
   void Delay(uint32_t us) {
     now_us += us;
-    if (cal_running_ && (now_us >= cal_done_us_) && convstEndOk()) {
+    if (cal_running_ && (now_us >= cal_done_us_) && (cal_continuous_ || convstEndOk())) {
       cal_running_ = false;
       cal_mode_applied_ = cal_mode_;
       ++calibrations;
@@ -507,6 +509,15 @@ private:
         cal_armed_ = false; // TRIG must stay high at least 10 us
         cal_trig_released_ = false;
       }
+      // Continuous mode (INT_TRIG_MODE 0) waits for 100,000 CONVST periods (Table 7-7); with a
+      // timer driving CONVST the calibration is under way as soon as TRIG is released.
+      if (cal_trig_released_ && knobs.free_running_convst && ((Common(0x14) & 2U) == 0U)) {
+        cal_running_ = true;
+        cal_continuous_ = true;
+        cal_armed_ = false;
+        cal_trig_released_ = false;
+        cal_done_us_ = now_us + (100'000ULL * 1'000'000ULL / knobs.convst_hz);
+      }
     }
     cal_mode_ = static_cast<uint16_t>(d & 3U);
     if (cal_mode_ == 0U) {
@@ -517,6 +528,7 @@ private:
   void onConvstFall() {
     if (cal_armed_ && cal_trig_released_ && !cal_running_) {
       cal_running_ = true;
+      cal_continuous_ = false;
       cal_armed_ = false;
       cal_trig_released_ = false;
       cal_done_us_ = now_us + knobs.cal_busy_us;
@@ -804,6 +816,7 @@ private:
   bool cal_trig_released_{false};
   uint64_t cal_arm_time_{0};
   bool cal_running_{false};
+  bool cal_continuous_{false}; ///< The running calibration is a continuous-mode one.
   uint64_t cal_done_us_{0};
   uint16_t cal_mode_{0};
   uint16_t cal_mode_applied_{0};
