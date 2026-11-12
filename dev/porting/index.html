@@ -1253,7 +1253,7 @@
 <!-- /generated -->
 
 <p>The driver never calls your SDK. It calls hooks on a class you derive from <code>ads9324::SpiInterface&lt;Self&gt;</code> (in
-<a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/1e2ed2cac92593a128d8f2f72c395260a463e07f/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a>). The base uses CRTP and declares no hook
+<a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8ade1b1e83c496e743517bcd055407f6f2d48d0c/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a>). The base uses CRTP and declares no hook
 itself; the driver template is constrained by the <code>ads9324::SpiPort</code> concept, so calls are resolved at compile
 time (no virtual functions, nothing to allocate) and a missing or misdeclared hook is a compile error at the point
 of use.</p>
@@ -1347,7 +1347,7 @@ of use.</p>
 </ul>
 <h2 id="bus-requirements">Bus requirements<a class="headerlink" href="#bus-requirements" title="Permanent link">&para;</a></h2>
 <p>The driver states what the ADS9324 needs from the bus as <code>constexpr</code> values in
-<a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/1e2ed2cac92593a128d8f2f72c395260a463e07f/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a> (handbook KB-CPP-123). Check your port's
+<a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8ade1b1e83c496e743517bcd055407f6f2d48d0c/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a> (handbook KB-CPP-123). Check your port's
 settings against them with <code>static_assert</code>, as the ESP32 example port does, so a port that clocks too fast or in
 the wrong mode does not compile:</p>
 <table>
@@ -1567,14 +1567,14 @@ or a <code>Log()</code> that returns <code>int</code> is a compile error: the dr
 <p>Every port lives with its example, in <code>examples/&lt;platform&gt;/</code>; the driver has none. <a href="../platforms/">Platforms</a> lists
 them and how to add one.</p>
 <ul>
-<li><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/1e2ed2cac92593a128d8f2f72c395260a463e07f/examples/host/host_ads9324_port.hpp"><code>examples/host/host_ads9324_port.hpp</code></a>: any PC, against a simulated
+<li><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8ade1b1e83c496e743517bcd055407f6f2d48d0c/examples/host/host_ads9324_port.hpp"><code>examples/host/host_ads9324_port.hpp</code></a>: any PC, against a simulated
   chip. Start from it for a host build or a test bench; it is also the smallest complete port.</li>
-<li><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/1e2ed2cac92593a128d8f2f72c395260a463e07f/examples/esp32/main/esp32_ads9324_port.hpp"><code>examples/esp32/main/esp32_ads9324_port.hpp</code></a>: ESP-IDF, with
+<li><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8ade1b1e83c496e743517bcd055407f6f2d48d0c/examples/esp32/main/esp32_ads9324_port.hpp"><code>examples/esp32/main/esp32_ads9324_port.hpp</code></a>: ESP-IDF, with
   every hook except <code>CaptureLanes()</code> (the data is on one lane). Start from it for any ESP-IDF target.</li>
 </ul>
 <h2 id="check-your-port">Check your port<a class="headerlink" href="#check-your-port" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Build it: the ports on this page are compiled by the host CI from <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/1e2ed2cac92593a128d8f2f72c395260a463e07f/tests/docs/my_port.hpp"><code>tests/docs/</code></a>,
+<li>Build it: the ports on this page are compiled by the host CI from <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8ade1b1e83c496e743517bcd055407f6f2d48d0c/tests/docs/my_port.hpp"><code>tests/docs/</code></a>,
    with the driver instantiated over them.</li>
 <li>Call <code>EnsureInitialized()</code>: <code>Ok</code> proves that writes and reads work and that DEVICE_ID read <code>0x0004</code>.</li>
 <li>Call <code>RunDataPathSelfTest()</code>: every channel returns its own test pattern, which proves the data lanes, the

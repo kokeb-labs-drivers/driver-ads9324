@@ -1082,7 +1082,7 @@
 <details class="kb-figure-desc">
 <summary>Figure description and sources</summary>
 <p>Top to bottom, each arrow is a call. Your application calls one object, whose public calls are listed from the umbrella header in inc/. The core turns each call into register reads and writes and hands them to the port contract (the CRTP base in inc/*_interface.hpp), which forwards them, at compile time, to the hooks of the port class you write; your port moves the bytes on the bus. The notes on the right say which layers stay the same on every MCU and which one you write. A library without a port contract has only the first two layers.</p>
-<p>Drawn from: <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/1e2ed2cac92593a128d8f2f72c395260a463e07f/inc/ads9324.hpp"><code>inc/ads9324.hpp</code></a> <code>public calls</code>; <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/1e2ed2cac92593a128d8f2f72c395260a463e07f/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a> <code>SpiInterface</code>; figure module <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/1e2ed2cac92593a128d8f2f72c395260a463e07f/docs/diagrams/figures/driver-layers.py"><code>docs/diagrams/figures/driver-layers.py</code></a>.</p>
+<p>Drawn from: <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8ade1b1e83c496e743517bcd055407f6f2d48d0c/inc/ads9324.hpp"><code>inc/ads9324.hpp</code></a> <code>public calls</code>; <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8ade1b1e83c496e743517bcd055407f6f2d48d0c/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a> <code>SpiInterface</code>; figure module <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8ade1b1e83c496e743517bcd055407f6f2d48d0c/docs/diagrams/figures/driver-layers.py"><code>docs/diagrams/figures/driver-layers.py</code></a>.</p>
 </details>
 <h2 id="layers">Layers<a class="headerlink" href="#layers" title="Permanent link">&para;</a></h2>
 <table>
@@ -1096,22 +1096,22 @@
 <tbody>
 <tr>
 <td>Core</td>
-<td><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/1e2ed2cac92593a128d8f2f72c395260a463e07f/inc/ads9324.hpp"><code>inc/ads9324.hpp</code></a>, <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/1e2ed2cac92593a128d8f2f72c395260a463e07f/src/ads9324.ipp"><code>src/ads9324.ipp</code></a></td>
+<td><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8ade1b1e83c496e743517bcd055407f6f2d48d0c/inc/ads9324.hpp"><code>inc/ads9324.hpp</code></a>, <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8ade1b1e83c496e743517bcd055407f6f2d48d0c/src/ads9324.ipp"><code>src/ads9324.ipp</code></a></td>
 <td>Lifecycle, setters, conversions, calibration, standby, errors</td>
 </tr>
 <tr>
 <td>Types and encoding</td>
-<td><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/1e2ed2cac92593a128d8f2f72c395260a463e07f/inc/ads9324_types.hpp"><code>inc/ads9324_types.hpp</code></a>, <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/1e2ed2cac92593a128d8f2f72c395260a463e07f/inc/ads9324_encode.hpp"><code>inc/ads9324_encode.hpp</code></a></td>
+<td><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8ade1b1e83c496e743517bcd055407f6f2d48d0c/inc/ads9324_types.hpp"><code>inc/ads9324_types.hpp</code></a>, <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8ade1b1e83c496e743517bcd055407f6f2d48d0c/inc/ads9324_encode.hpp"><code>inc/ads9324_encode.hpp</code></a></td>
 <td><code>Error</code>, <code>Result&lt;T&gt;</code>, <code>Config</code> and <code>Validate()</code>; the pure, constexpr <code>Encode()</code> of a <code>Config</code> into registers; the frame decoder</td>
 </tr>
 <tr>
 <td>Registers</td>
-<td><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/1e2ed2cac92593a128d8f2f72c395260a463e07f/inc/ads9324_registers.hpp"><code>inc/ads9324_registers.hpp</code></a></td>
+<td><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8ade1b1e83c496e743517bcd055407f6f2d48d0c/inc/ads9324_registers.hpp"><code>inc/ads9324_registers.hpp</code></a></td>
 <td>The three banks, 116 registers, fields, reset values, the channel-to-register mapping</td>
 </tr>
 <tr>
 <td>Port contract</td>
-<td><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/1e2ed2cac92593a128d8f2f72c395260a463e07f/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a></td>
+<td><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8ade1b1e83c496e743517bcd055407f6f2d48d0c/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a></td>
 <td>The CRTP base, <code>CtrlPin</code> and <code>GpioSignal</code>, the <code>SpiPort</code> concept, the 24-bit register framing</td>
 </tr>
 <tr>
@@ -1121,7 +1121,7 @@
 </tr>
 <tr>
 <td>Kconfig layer</td>
-<td><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/1e2ed2cac92593a128d8f2f72c395260a463e07f/inc/ads9324_kconfig.hpp"><code>inc/ads9324_kconfig.hpp</code></a></td>
+<td><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8ade1b1e83c496e743517bcd055407f6f2d48d0c/inc/ads9324_kconfig.hpp"><code>inc/ads9324_kconfig.hpp</code></a></td>
 <td>Optional: a <code>Config</code> from ESP-IDF menuconfig</td>
 </tr>
 </tbody>
@@ -1183,23 +1183,23 @@ call succeeded. With <code>Verify::ReadBack</code> each written register is read
 <tbody>
 <tr>
 <td>The public API</td>
-<td><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/1e2ed2cac92593a128d8f2f72c395260a463e07f/inc/ads9324.hpp"><code>inc/ads9324.hpp</code></a></td>
+<td><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8ade1b1e83c496e743517bcd055407f6f2d48d0c/inc/ads9324.hpp"><code>inc/ads9324.hpp</code></a></td>
 </tr>
 <tr>
 <td>How a call is implemented</td>
-<td><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/1e2ed2cac92593a128d8f2f72c395260a463e07f/src/ads9324.ipp"><code>src/ads9324.ipp</code></a></td>
+<td><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8ade1b1e83c496e743517bcd055407f6f2d48d0c/src/ads9324.ipp"><code>src/ads9324.ipp</code></a></td>
 </tr>
 <tr>
 <td>Register addresses, fields and the bank mapping</td>
-<td><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/1e2ed2cac92593a128d8f2f72c395260a463e07f/inc/ads9324_registers.hpp"><code>inc/ads9324_registers.hpp</code></a></td>
+<td><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8ade1b1e83c496e743517bcd055407f6f2d48d0c/inc/ads9324_registers.hpp"><code>inc/ads9324_registers.hpp</code></a></td>
 </tr>
 <tr>
 <td>How a <code>Config</code> becomes registers and a frame becomes codes</td>
-<td><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/1e2ed2cac92593a128d8f2f72c395260a463e07f/inc/ads9324_encode.hpp"><code>inc/ads9324_encode.hpp</code></a></td>
+<td><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8ade1b1e83c496e743517bcd055407f6f2d48d0c/inc/ads9324_encode.hpp"><code>inc/ads9324_encode.hpp</code></a></td>
 </tr>
 <tr>
 <td>The port contract</td>
-<td><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/1e2ed2cac92593a128d8f2f72c395260a463e07f/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a></td>
+<td><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8ade1b1e83c496e743517bcd055407f6f2d48d0c/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a></td>
 </tr>
 </tbody>
 </table>

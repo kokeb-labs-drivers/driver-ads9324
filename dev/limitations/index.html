@@ -1159,9 +1159,17 @@ each device's SDOUT to the next one's SDI. The driver leaves it out of version 1
 </ul>
 <h2 id="behaviours-to-know">Behaviours to know<a class="headerlink" href="#behaviours-to-know" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>The randomizer's XOR_BITS_CTL code.</strong> The register table gives 0x00F1; a note in the datasheet says 0x00C1. The
+<li>
+<p><strong>Continuous-mode calibration needs a running CONVST.</strong> <code>CalibrationTrigger::Continuous</code> waits 100,000 CONVST
+  periods (Table 7-7) and then reads CALIB_BUSY_FLAG; the chip counts the periods only while CONVST toggles, so a
+  timer must drive CONVST during the wait. With no CONVST the calibration starts at the next pulse and the data
+  after it is not valid until it ends. <code>CalibrationTrigger::SingleShot</code> needs no timer.</p>
+</li>
+<li>
+<p><strong>The randomizer's XOR_BITS_CTL code.</strong> The register table gives 0x00F1; a note in the datasheet says 0x00C1. The
   driver writes 0x00F1 and only that value or 0x0000. If a bench read shows a chip that wants the other
-  value, change <code>reg::kXorBitsRandomizer</code> and nothing else.</li>
+  value, change <code>reg::kXorBitsRandomizer</code> and nothing else.</p>
+</li>
 <li>
 <p><strong>Coverage of the datasheet.</strong> <a href="../coverage-matrix/">Coverage matrix</a> lists every parameter the datasheet specifies
   with the symbol that covers it; rows marked <code>GAP</code> are values the driver has no symbol for (limits and delays that
