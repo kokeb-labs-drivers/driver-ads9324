@@ -12,12 +12,51 @@
       "inc/ads9324_spi_interface.hpp"
     ]
   },
+  "chip-capabilities": {
+    "title": "What the ADS9324 does",
+    "alt": "Capability map of the ADS9324: Simultaneous sampling (supported): Samples all 16 inputs at one instant on CONVST and reads the whole frame of results; Programmable gain front end (supported): Per channel: ±2.5 V to ±12.5 V, differential, single-ended or open-wire safe, 25 or 325 kHz bandwidth; Reference (supported): The internal 4.096 V reference and buffer, or an external reference; Calibration (supported): System offset, gain and phase per channel, and the chip's own ADC gain and offset calibration; Digital filters (supported): Block average, moving average or low-pass FIR filtering of the oversampled results; Window comparator (supported): Flags a channel that leaves a high and low threshold with hysteresis, on the ALARM pin; Data interface (partial): 1, 2, 4 or 8 data lanes, 16- or 24-bit words, the output randomizer and test patterns; Standby (supported): Powers down the analog front end and the reference, then wakes with the registers checked; Reset and identity (supported): Hardware or software reset, the device ID check and the reset-detect flag.",
+    "description": "Each card is one function of the ADS9324: an icon, its name and what it does for the application. The filled pill says how this driver covers it (legend below); the outlined pills are the chip registers behind it. The coverage table in the README gives the driver calls and the datasheet section of each card.",
+    "profile": "overview",
+    "width": 1200,
+    "source": "docs/hardware.yml",
+    "sources": [
+      "docs/hardware.yml",
+      "inc/ads9324.hpp",
+      "inc/ads9324_spi_interface.hpp"
+    ]
+  },
   "chip-circuit-typical": {
     "title": "ADS9324: Typical application",
     "alt": "Schematic of the ADS9324 typical application: the chip with U2 MCU, C1 capacitor 1 µF, C2 capacitor 0.1 µF, C3 capacitor 1 µF, C4 capacitor 0.1 µF, C5 capacitor 1 µF, C6 capacitor 0.1 µF, C7 capacitor 4.7 µF, C8 capacitor 1 µF, C9 capacitor 1 µF, R1 resistor 1 kΩ, R2 resistor 1 kΩ, C10 capacitor 10 nF; the MCU wires carry the port hooks GpioGet(CtrlPin::DrdyAlarm), GpioSet(CtrlPin::Convst), GpioSet(CtrlPin::Reset), Transfer().",
     "description": "A schematic. The MCU is on the left, each of its pins level with the chip pin it connects to; above each wire is the hook of the driver's port that drives or reads it. Supply pins point up to their supply and decoupling, ground pins down. Pins on the right carry the loads and the pins tied to a supply or ground; a cross marks a pin left open. A dot is a junction; wires that cross without a dot are not connected.",
     "profile": "detail",
     "width": 1464,
+    "source": "docs/hardware.yml",
+    "sources": [
+      "docs/hardware.yml",
+      "inc/ads9324.hpp",
+      "inc/ads9324_spi_interface.hpp"
+    ]
+  },
+  "chip-frame-spi": {
+    "title": "ADS9324: SPI register frame",
+    "alt": "SPI register frame of the ADS9324, 24 bits, most significant bit first. Write: register address (bits 23 to 16), 16-bit value (bits 15 to 0); Read: 0x01 (GEN_CFG1) (bits 23 to 16), register to read (bits 15 to 8), 0x01 (read) (bits 7 to 0); Reply: 16-bit register value (bits 23 to 8), 0x00 (bits 7 to 0). Below, the SPI mode 0 waveform of one transfer in the same bit grid.",
+    "description": "One SPI register frame of the ADS9324, 24 bits in a row from the most significant (left, sent first) to the least significant (right). Each row is one kind of frame; each coloured box a field, with its first and last bit number under it. The waveform below draws the select, the clock and the data lines over the same bits.",
+    "profile": "overview",
+    "width": 1200,
+    "source": "docs/hardware.yml",
+    "sources": [
+      "docs/hardware.yml",
+      "inc/ads9324.hpp",
+      "inc/ads9324_spi_interface.hpp"
+    ]
+  },
+  "chip-hero": {
+    "title": "ADS9324",
+    "alt": "Overview of the ADS9324, a 16-channel, 16-bit SAR ADC that samples all of its inputs at the same instant at up to 1 MSPS, each through its own programmable-gain front end with 1 MΩ input impedance, so sensors and transformers connect without drivers. A MCU talks to it over SPI, 1 to 8 data lanes; it drives DRDY/ALARM line; it reads back Sensors and transformers. Headline figures: 16 x 16-bit inputs sampled at one instant; 1 MSPS on each channel; ±12.5 V widest input range; down to ±2.5 V; 1 MΩ input impedance of the PGA; 4.096 V internal reference, 15 ppm/°C typical; 8 x 8 mm VQFN-64 body.",
+    "description": "The ADS9324 in the middle, drawn as its VQFN-64 package. On the left the MCU that runs the driver, joined to it by SPI, 1 to 8 data lanes. To the right, what the chip drives, in the order the power flows. Below it, what the chip reads back. The tiles at the bottom are the headline numbers, each with the datasheet section and page it comes from.",
+    "profile": "overview",
+    "width": 1200,
     "source": "docs/hardware.yml",
     "sources": [
       "docs/hardware.yml",
@@ -44,6 +83,19 @@
     "description": "The ADS9324 seen from the top, in its VQFN-64 package. Pin 1 is marked by the dot; the numbers run counter-clockwise from it. Each pad is coloured by the pin's electrical type (legend below). Next to it is the pin's name and, in mono, the hook of the driver's port that drives or reads it; a pin without a hook is not used by the driver. The dashed square is the exposed pad.",
     "profile": "detail",
     "width": 1453,
+    "source": "docs/hardware.yml",
+    "sources": [
+      "docs/hardware.yml",
+      "inc/ads9324.hpp",
+      "inc/ads9324_spi_interface.hpp"
+    ]
+  },
+  "chip-wiring-typical": {
+    "title": "Wiring: Typical application",
+    "alt": "Wiring of the ADS9324 for the Typical application: MCU SPI SCK to SCLK (Transfer()); MCU SPI MOSI to SDI (Transfer()); MCU SPI MISO to SDOUT (Transfer()); MCU GPIO / CS to CS (Transfer()); MCU GPIO to RESET (GpioSet(CtrlPin::Reset)); MCU GPIO / timer to CONVST (GpioSet(CtrlPin::Convst)); MCU GPIO (IRQ) to DRDY/ALARM (GpioGet(CtrlPin::DrdyAlarm)). Supplies, grounds and the support parts are listed under the drawing.",
+    "description": "The MCU on the left, the ADS9324 in the middle. Each wire is coloured by the chip pin's electrical type and carries the net name and the chip pin number above it and, under it, the driver hook that uses it (and any part on the net). The boxes underneath list the supplies, the support parts and the pins this circuit leaves unconnected.",
+    "profile": "overview",
+    "width": 1200,
     "source": "docs/hardware.yml",
     "sources": [
       "docs/hardware.yml",

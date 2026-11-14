@@ -21,6 +21,17 @@ refs:
   supply: {doc: ds, section: "9.3 Power Supply Recommendations, Figure 9-4", page: 109}
   outline: {doc: ds, section: "12.1 Mechanical Data, RSK0064B", page: 112}
   order: {doc: ds, section: "12 Mechanical, Packaging, and Orderable Information", page: 115}
+  features: {doc: ds, section: "1 Features", page: 1}
+  uses: {doc: ds, section: "2 Applications", page: 1}
+  overview: {doc: ds, section: "7.1 Overview", page: 24}
+  pga: {doc: ds, section: "7.3.4 Programmable Gain Amplifier (PGA)", page: 26}
+  syscal: {doc: ds, section: "7.3.8 System Offset Calibration", page: 31}
+  filter: {doc: ds, section: "7.3.11 Digital Filter", page: 34}
+  dwc: {doc: ds, section: "7.3.12 Digital Window Comparator", page: 39}
+  iface: {doc: ds, section: "7.3.14 Data Interface", page: 42}
+  modes: {doc: ds, section: "7.4 Device Functional Modes", page: 49}
+  regwrite: {doc: ds, section: "7.5.1 Register Write Operation, Figure 7-41", page: 50}
+  regread: {doc: ds, section: "7.5.2 Register Read Operation, Table 7-17", page: 51}
 
 # The ADS9324 in the 64-pin VQFN (RSK). The exposed thermal pad connects to GND.
 package:
@@ -45,6 +56,107 @@ supply:
   - {name: AVDD_5V, min_v: 4.75, max_v: 5.25, ref: roc}
   - {name: AVDD_1V8, min_v: 1.7, max_v: 1.9, ref: roc}
   - {name: IOVDD, min_v: 1.7, max_v: 3.6, ref: roc}
+
+# The chip-first README: what the chip is and does, where it is used, how the driver covers it and what one
+# register frame carries. `kokeb-docs figures` draws chip-hero, chip-capabilities and chip-frame-spi from it,
+# `kokeb-docs gen` the README's chip-summary, chip-uses and chip-coverage regions. The conversion data leave on 1 to
+# 8 lanes in several word formats, so only the fixed 24-bit register frame is drawn.
+overview:
+  summary: >-
+    a 16-channel, 16-bit SAR ADC that samples all of its inputs at the same instant at up to 1 MSPS, each through its
+    own programmable-gain front end with 1 MΩ input impedance, so sensors and transformers connect without drivers
+  category: 16-channel simultaneous-sampling ADC
+  ref: features
+  applications:
+    - {label: Substation automation, ref: uses}
+    - {label: Motor protection relays and contactors, ref: uses}
+    - {label: Motor control current sensing, ref: uses}
+    - {label: Industrial automation, ref: uses}
+    - {label: Test and measurement, ref: uses}
+  specs:
+    - {value: "16 x 16-bit", label: "inputs sampled at one instant", ref: features}
+    - {value: "1 MSPS", label: "on each channel", ref: features}
+    - {value: "±12.5 V", label: "widest input range; down to ±2.5 V", ref: features}
+    - {value: "1 MΩ", label: "input impedance of the PGA", ref: features}
+    - {value: "4.096 V", label: "internal reference, 15 ppm/°C typical", ref: features}
+    - {value: "8 x 8 mm", label: "VQFN-64 body", ref: outline}
+  system:
+    host: MCU
+    bus: SPI, 1 to 8 data lanes
+    drives:
+      - {label: DRDY/ALARM line, detail: "data ready, or the window comparator alarm", ref: dwc}
+    senses:
+      - {label: Sensors and transformers, detail: "16 inputs, differential or single-ended", ref: overview}
+
+# Headers the capability `api` and `registers` names are checked against.
+driver:
+  api: [inc/ads9324.hpp, inc/ads9324_types.hpp]
+  registers: [inc/ads9324_registers.hpp]
+
+capabilities:
+  - {id: sampling, title: Simultaneous sampling, icon: analog, status: supported, ref: overview, docs: api-guide.md,
+     what: "Samples all 16 inputs at one instant on CONVST and reads the whole frame of results",
+     api: [Convert, WaitDataReady, ReadFrame, MeasureOnce, SetChannels], registers: [ANA_CFG2]}
+  - {id: pga, title: Programmable gain front end, icon: gauge, status: supported, ref: pga, docs: configuration.md,
+     what: "Per channel: ±2.5 V to ±12.5 V, differential, single-ended or open-wire safe, 25 or 325 kHz bandwidth",
+     api: [SetInput, Input], registers: [PGA_CONFIG, PGA_BW_SEL]}
+  - {id: reference, title: Reference, icon: power, status: supported, ref: reference, docs: configuration.md,
+     what: "The internal 4.096 V reference and buffer, or an external reference",
+     api: [SetReference, ReferenceSource], registers: [ANA_CFG1]}
+  - {id: calibration, title: Calibration, icon: settings, status: supported, ref: syscal, docs: api-guide.md,
+     what: "System offset, gain and phase per channel, and the chip's own ADC gain and offset calibration",
+     api: [SetInput, RunAdcCalibration, IsCalibrationBusy], registers: [OFS, GAN, PHASE_DELAY, ADC_CAL]}
+  - {id: filter, title: Digital filters, icon: flow, status: supported, ref: filter, docs: configuration.md,
+     what: "Block average, moving average or low-pass FIR filtering of the oversampled results",
+     api: [SetFilter, Filter], registers: [DIG_FILTER, GEN_CFG5]}
+  - {id: window, title: Window comparator, icon: alert, status: supported, ref: dwc, docs: api-guide.md,
+     what: "Flags a channel that leaves a high and low threshold with hysteresis, on the ALARM pin",
+     api: [SetAlarm, ReadWindowFlags, ClearWindowFlags, ReadAlarmPin],
+     registers: [DWC_CFG, DWC_TH, DWC_HYS, DWC_FLAG, DRDY_ALARM_SEL]}
+  - {id: interface, title: Data interface, icon: bus, status: partial, ref: iface, docs: limitations.md,
+     what: "1, 2, 4 or 8 data lanes, 16- or 24-bit words, the output randomizer and test patterns",
+     note: "the daisy chain is not supported", api: [SetInterface, CaptureLanes, SetTestPattern, RunDataPathSelfTest],
+     registers: [GEN_CFG3, XOR_BITS_CTL, TP_CFG, GEN_CFG4]}
+  - {id: standby, title: Standby, icon: sleep, status: supported, ref: modes, docs: api-guide.md,
+     what: "Powers down the analog front end and the reference, then wakes with the registers checked",
+     api: [PowerDown, Wake, IsPoweredDown], registers: [PDN_CTL]}
+  - {id: reset, title: Reset and identity, icon: tag, status: supported, ref: modes, docs: contract.md,
+     what: "Hardware or software reset, the device ID check and the reset-detect flag",
+     api: [Reset, Identify, EnsureInitialized], registers: [GEN_CFG1, DEVICE_ID, DIAG_CTRL]}
+
+# One register access of the ADS9324: a 24-bit SPI frame. A read takes two frames: the read command, then any
+# frame that clocks the 16-bit value out.
+frames:
+  - id: spi
+    title: SPI register frame
+    description: A register write or read command is one 24-bit frame with CS low; the value read comes in the next
+      frame.
+    bits: 24
+    ref: regwrite
+    rows:
+      - label: Write
+        sub: SDI
+        fields:
+          - {name: register address, bits: [23, 16], tone: blue, short: address}
+          - {name: 16-bit value, bits: [15, 0], tone: green}
+      - label: Read
+        sub: "SDI, address 0x01"
+        fields:
+          - {name: "0x01 (GEN_CFG1)", bits: [23, 16], tone: amber, short: "0x01"}
+          - {name: register to read, bits: [15, 8], tone: blue, short: address}
+          - {name: "0x01 (read)", bits: [7, 0], tone: amber, short: "0x01"}
+      - label: Reply
+        sub: "SDOUT, next frame"
+        fields:
+          - {name: 16-bit register value, bits: [23, 8], tone: green}
+          - {name: "0x00", bits: [7, 0], tone: slate}
+    waveform:
+      spi_mode: 0
+      select: CS
+      clock: SCLK
+      lanes:
+        - {name: SDI, row: Read}
+        - {name: SDOUT, row: Reply}
 
 # The port hooks a pin can map to (the names the driver's port headers declare).
 hooks:
