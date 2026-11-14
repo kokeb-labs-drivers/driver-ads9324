@@ -52,13 +52,13 @@ The site at <https://kokeb-labs-drivers.github.io/driver-ads9324/> opens when th
 ## Where it is used
 
 <!-- generated: chip-uses -->
-- Substation automation (2, [p. 1](https://www.ti.com/lit/ds/symlink/ads9324.pdf#page=1))
-- Motor protection relays and contactors (2, [p. 1](https://www.ti.com/lit/ds/symlink/ads9324.pdf#page=1))
-- Motor control current sensing (2, [p. 1](https://www.ti.com/lit/ds/symlink/ads9324.pdf#page=1))
-- Industrial automation (2, [p. 1](https://www.ti.com/lit/ds/symlink/ads9324.pdf#page=1))
-- Test and measurement (2, [p. 1](https://www.ti.com/lit/ds/symlink/ads9324.pdf#page=1))
+- Substation automation
+- Motor protection relays and contactors
+- Motor control current sensing
+- Industrial automation
+- Test and measurement
 
-Uses named by the datasheet (1 Features, [p. 1](https://www.ti.com/lit/ds/symlink/ads9324.pdf#page=1)).
+Uses named by the datasheet (2 Applications, [p. 1](https://www.ti.com/lit/ds/symlink/ads9324.pdf#page=1)).
 <!-- /generated -->
 
 ## Inside the chip

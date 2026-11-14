@@ -67,12 +67,13 @@ overview:
     own programmable-gain front end with 1 MΩ input impedance, so sensors and transformers connect without drivers
   category: 16-channel simultaneous-sampling ADC
   ref: features
+  applications_ref: uses
   applications:
-    - {label: Substation automation, ref: uses}
-    - {label: Motor protection relays and contactors, ref: uses}
-    - {label: Motor control current sensing, ref: uses}
-    - {label: Industrial automation, ref: uses}
-    - {label: Test and measurement, ref: uses}
+    - Substation automation
+    - Motor protection relays and contactors
+    - Motor control current sensing
+    - Industrial automation
+    - Test and measurement
   specs:
     - {value: "16 x 16-bit", label: "inputs sampled at one instant", ref: features}
     - {value: "1 MSPS", label: "on each channel", ref: features}
