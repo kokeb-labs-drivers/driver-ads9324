@@ -1,4 +1,0 @@
-var searchData=
-[
-  ['map_0',['Register map',['../group__ads9324__registers.html',1,'']]]
-];
