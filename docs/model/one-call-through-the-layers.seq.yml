@@ -1,0 +1,27 @@
+---
+# Model of the figure 'one-call-through-the-layers'. Edit this file; `kokeb-docs figures` draws it. Never edit the SVGs.
+kind: seq
+id: one-call-through-the-layers
+title: "One call through the layers"
+alt: >-
+  One call through the layers: your code calls MeasureOnce(), the core exchanges frames with the chip through your
+  port and returns the result to your code.
+reads: >-
+  Participants, left to right: Your code, ADS9324<Port> and Your port. The steps run from top to bottom. Your code sends MeasureOnce() to ADS9324<Port>. ADS9324<Port> sends GpioSet(Convst, ACTIVE) to Your port. ADS9324<Port> sends GpioSet(Convst, INACTIVE) to Your port. A note over ADS9324<Port> says: the falling edge samples all 16 channels. ADS9324<Port> sends GpioGet(DrdyAlarm) or DelayUs(1.25 us) to Your port. ADS9324<Port> sends Transfer(zeros, rx, N bytes) to Your port. Your port returns true, N bytes to ADS9324<Port>. A note over ADS9324<Port> says: derandomize, DIAG, codes to microvolts. ADS9324<Port> returns Result<Frame> to Your code.
+print: landscape
+sources:
+  - docs/model/one-call-through-the-layers.seq.yml
+participants:
+  - {id: app, label: "Your code", tone: magenta}
+  - {id: core, label: "ADS9324<Port>", tone: green}
+  - {id: port, label: "Your port", tone: teal}
+steps:
+  - {from: app, to: core, label: "MeasureOnce()"}
+  - {from: core, to: port, label: "GpioSet(Convst, ACTIVE)"}
+  - {from: core, to: port, label: "GpioSet(Convst, INACTIVE)"}
+  - {note: "the falling edge samples all 16 channels", over: [core, port]}
+  - {from: core, to: port, label: "GpioGet(DrdyAlarm) or DelayUs(1.25 us)"}
+  - {from: core, to: port, label: "Transfer(zeros, rx, N bytes)"}
+  - {from: port, to: core, label: "true, N bytes", return: true}
+  - {note: "derandomize, DIAG, codes to microvolts", over: [core, port]}
+  - {from: core, to: app, label: "Result<Frame>", return: true}

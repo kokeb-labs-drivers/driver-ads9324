@@ -103,3 +103,37 @@ Drawn from:
 
 - `public calls` in [`inc/ads9324.hpp`](../../inc/ads9324.hpp)
 - `SpiInterface` in [`inc/ads9324_spi_interface.hpp`](../../inc/ads9324_spi_interface.hpp)
+
+## One call through the layers
+
+<!-- figure: one-call-through-the-layers -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="one-call-through-the-layers.dark.svg">
+  <img src="one-call-through-the-layers.svg"
+    alt="One call through the layers: your code calls MeasureOnce(), the core exchanges frames with the chip
+    through your port and returns the result to your code.">
+</picture>
+<!-- /figure -->
+
+Hardware description: [`docs/model/one-call-through-the-layers.seq.yml`](../model/one-call-through-the-layers.seq.yml)
+
+Drawn from:
+
+- [`docs/model/one-call-through-the-layers.seq.yml`](../model/one-call-through-the-layers.seq.yml)
+
+## One register read on the SPI bus
+
+<!-- figure: spi-register-read -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="spi-register-read.dark.svg">
+  <img src="spi-register-read.svg"
+    alt="A register read on the ADS9324 SPI bus: the host sends the read command inside one chip-select
+    frame, then clocks out a second frame in which the chip returns the value on SDOUT.">
+</picture>
+<!-- /figure -->
+
+Hardware description: [`docs/model/spi-register-read.seq.yml`](../model/spi-register-read.seq.yml)
+
+Drawn from:
+
+- [`docs/model/spi-register-read.seq.yml`](../model/spi-register-read.seq.yml)
