@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="653" height="579" viewBox="0 0 653 579" role="img" aria-labelledby="one-call-through-the-layers-title one-call-through-the-layers-desc" font-family="Inter, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+<title id="one-call-through-the-layers-title">One call through the layers</title>
+<desc id="one-call-through-the-layers-desc">One call through the layers: your code calls MeasureOnce(), the core exchanges frames with the chip through your port and returns the result to your code.</desc>
+<defs><marker id="one-call-through-the-layers-arrow-rail" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7C8798"/></marker></defs>
+<rect x="0.5" y="0.5" width="652" height="578" rx="16" fill="#FFFFFF" stroke="#E2E7EE"/>
+<text x="32" y="54.8" font-size="26" font-weight="700" fill="#0E1726">One call through the layers</text>
+<rect x="32" y="70.8" width="589" height="1" fill="#E2E7EE"/>
+<path d="M104.6 144.8 L104.6 582.8" fill="none" stroke="#738093" stroke-width="1.2" stroke-dasharray="5 5"/>
+<path d="M274.6 144.8 L274.6 582.8" fill="none" stroke="#738093" stroke-width="1.2" stroke-dasharray="5 5"/>
+<path d="M548.4 144.8 L548.4 582.8" fill="none" stroke="#738093" stroke-width="1.2" stroke-dasharray="5 5"/>
+<path d="M108.6 180.8 L270.6 180.8" fill="none" stroke="#7C8798" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#one-call-through-the-layers-arrow-rail)"/>
+<path d="M278.6 224.8 L544.4 224.8" fill="none" stroke="#7C8798" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#one-call-through-the-layers-arrow-rail)"/>
+<path d="M278.6 268.8 L544.4 268.8" fill="none" stroke="#7C8798" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#one-call-through-the-layers-arrow-rail)"/>
+<path d="M278.6 364.8 L544.4 364.8" fill="none" stroke="#7C8798" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#one-call-through-the-layers-arrow-rail)"/>
+<path d="M278.6 408.8 L544.4 408.8" fill="none" stroke="#7C8798" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#one-call-through-the-layers-arrow-rail)"/>
+<path d="M544.4 452.8 L278.6 452.8" fill="none" stroke="#7C8798" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#one-call-through-the-layers-arrow-rail)"/>
+<path d="M270.6 548.8 L108.6 548.8" fill="none" stroke="#7C8798" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#one-call-through-the-layers-arrow-rail)"/>
+<rect x="39.6" y="88.8" width="130" height="52" rx="10" fill="#FDF0FF" stroke="#A21CAF" stroke-width="1.4"/>
+<rect x="39.6" y="96.8" width="4" height="36" rx="2" fill="#A21CAF"/>
+<rect x="189" y="88.8" width="171.1" height="52" rx="10" fill="#EAF7EF" stroke="#15803D" stroke-width="1.4"/>
+<rect x="189" y="96.8" width="4" height="36" rx="2" fill="#15803D"/>
+<rect x="483.4" y="88.8" width="130" height="52" rx="10" fill="#E6F6F4" stroke="#0B7A72" stroke-width="1.4"/>
+<rect x="483.4" y="96.8" width="4" height="36" rx="2" fill="#0B7A72"/>
+<rect x="204.6" y="296.8" width="413.9" height="41" rx="10" fill="#FFF5E3" stroke="#F1CF93" stroke-width="1"/>
+<rect x="204.6" y="480.8" width="413.9" height="41" rx="10" fill="#FFF5E3" stroke="#F1CF93" stroke-width="1"/>
+<text x="107.6" y="119.3" font-size="15" font-weight="700" text-anchor="middle" fill="#86198F">Your code</text>
+<text x="277.6" y="119.3" font-size="15" font-weight="700" text-anchor="middle" fill="#14532D">ADS9324&lt;Port&gt;</text>
+<text x="551.4" y="119.3" font-size="15" font-weight="700" text-anchor="middle" fill="#0B5F59">Your port</text>
+<rect x="136.2" y="156.8" width="106.8" height="20" rx="10" fill="#FFFFFF"/>
+<text x="189.6" y="171.1" font-size="12" font-weight="500" text-anchor="middle" fill="#566070">MeasureOnce()</text>
+<rect x="328.1" y="200.8" width="166.9" height="20" rx="10" fill="#FFFFFF"/>
+<text x="411.5" y="215.1" font-size="12" font-weight="500" text-anchor="middle" fill="#566070">GpioSet(Convst, ACTIVE)</text>
+<rect x="321.5" y="244.8" width="180" height="20" rx="10" fill="#FFFFFF"/>
+<text x="411.5" y="259.1" font-size="12" font-weight="500" text-anchor="middle" fill="#566070">GpioSet(Convst, INACTIVE)</text>
+<text x="218.6" y="321.9" font-size="13" fill="#8A3C0B">the falling edge samples all 16 channels</text>
+<rect x="282.6" y="340.8" width="257.9" height="20" rx="10" fill="#FFFFFF"/>
+<text x="411.5" y="355.1" font-size="12" font-weight="500" text-anchor="middle" fill="#566070">GpioGet(DrdyAlarm) or DelayUs(1.25 us)</text>
+<rect x="321" y="384.8" width="180.9" height="20" rx="10" fill="#FFFFFF"/>
+<text x="411.5" y="399.1" font-size="12" font-weight="500" text-anchor="middle" fill="#566070">Transfer(zeros, rx, N bytes)</text>
+<rect x="366.3" y="428.8" width="90.5" height="20" rx="10" fill="#FFFFFF"/>
+<text x="411.5" y="443.1" font-size="12" font-weight="500" text-anchor="middle" fill="#566070">true, N bytes</text>
+<text x="218.6" y="505.9" font-size="13" fill="#8A3C0B">derandomize, DIAG, codes to microvolts</text>
+<rect x="137" y="524.8" width="105.1" height="20" rx="10" fill="#FFFFFF"/>
+<text x="189.6" y="539.1" font-size="12" font-weight="500" text-anchor="middle" fill="#566070">Result&lt;Frame&gt;</text>
+</svg>
