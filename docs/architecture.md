@@ -59,21 +59,14 @@ call succeeded. With `Verify::ReadBack` each written register is read back and c
 
 ## One call through the layers
 
-```mermaid
-sequenceDiagram
-    participant App as Your code
-    participant Core as ADS9324<Port>
-    participant Port as Your port
-    App->>Core: MeasureOnce()
-    Core->>Port: GpioSet(Convst, ACTIVE)
-    Core->>Port: GpioSet(Convst, INACTIVE)
-    Note over Core: the falling edge samples all 16 channels
-    Core->>Port: GpioGet(DrdyAlarm) or DelayUs(1.25 us)
-    Core->>Port: Transfer(zeros, rx, N bytes)
-    Port-->>Core: true, N bytes
-    Note over Core: derandomize, DIAG, codes to microvolts
-    Core-->>App: Result<Frame>
-```
+<!-- figure: one-call-through-the-layers -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="diagrams/one-call-through-the-layers.dark.svg">
+  <img src="diagrams/one-call-through-the-layers.svg"
+    alt="One call through the layers: your code calls MeasureOnce(), the core exchanges frames with the chip
+    through your port and returns the result to your code.">
+</picture>
+<!-- /figure -->
 
 ## Design choices
 

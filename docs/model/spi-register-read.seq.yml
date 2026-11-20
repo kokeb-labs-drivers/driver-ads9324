@@ -1,0 +1,21 @@
+---
+# Model of the figure 'spi-register-read'. Edit this file; `kokeb-docs figures` draws it. Never edit the SVGs.
+kind: seq
+id: spi-register-read
+title: "One register read on the SPI bus"
+alt: >-
+  A register read on the ADS9324 SPI bus: the host sends the read command inside one chip-select frame, then
+  clocks out a second frame in which the chip returns the value on SDOUT.
+reads: >-
+  Participants, left to right: Host and ADS9324. The steps run from top to bottom. Host sends CS low, 0x01 0xAA 0x01 (GEN_CFG1: read register 0xAA), CS high to ADS9324. Host sends CS low, 0x00 0x00 0x00 to ADS9324. ADS9324 returns ..., value[15:8], value[7:0] on SDOUT to Host. Host sends CS high to ADS9324.
+print: landscape
+sources:
+  - docs/model/spi-register-read.seq.yml
+participants:
+  - {id: host, label: "Host", tone: magenta}
+  - {id: ads9324, label: "ADS9324", tone: amber}
+steps:
+  - {from: host, to: ads9324, label: "CS low, 0x01 0xAA 0x01 (GEN_CFG1: read register 0xAA), CS high"}
+  - {from: host, to: ads9324, label: "CS low, 0x00 0x00 0x00"}
+  - {from: ads9324, to: host, label: "..., value[15:8], value[7:0] on SDOUT", return: true}
+  - {from: host, to: ads9324, label: "CS high"}

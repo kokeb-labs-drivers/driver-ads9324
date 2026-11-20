@@ -62,5 +62,39 @@
       "inc/ads9324.hpp:public calls",
       "inc/ads9324_spi_interface.hpp:SpiInterface"
     ]
+  },
+  "one-call-through-the-layers": {
+    "title": "One call through the layers",
+    "alt": "One call through the layers: your code calls MeasureOnce(), the core exchanges frames with the chip through your port and returns the result to your code.",
+    "description": "Participants, left to right: Your code, ADS9324<Port> and Your port. The steps run from top to bottom. Your code sends MeasureOnce() to ADS9324<Port>. ADS9324<Port> sends GpioSet(Convst, ACTIVE) to Your port. ADS9324<Port> sends GpioSet(Convst, INACTIVE) to Your port. A note over ADS9324<Port> says: the falling edge samples all 16 channels. ADS9324<Port> sends GpioGet(DrdyAlarm) or DelayUs(1.25 us) to Your port. ADS9324<Port> sends Transfer(zeros, rx, N bytes) to Your port. Your port returns true, N bytes to ADS9324<Port>. A note over ADS9324<Port> says: derandomize, DIAG, codes to microvolts. ADS9324<Port> returns Result<Frame> to Your code.",
+    "profile": "detail",
+    "width": 653,
+    "source": "docs/model/one-call-through-the-layers.seq.yml",
+    "sources": [
+      "docs/model/one-call-through-the-layers.seq.yml"
+    ],
+    "kind": "seq",
+    "palette": 2,
+    "print": "landscape",
+    "adaptive": true,
+    "twin": false,
+    "font": ""
+  },
+  "spi-register-read": {
+    "title": "One register read on the SPI bus",
+    "alt": "A register read on the ADS9324 SPI bus: the host sends the read command inside one chip-select frame, then clocks out a second frame in which the chip returns the value on SDOUT.",
+    "description": "Participants, left to right: Host and ADS9324. The steps run from top to bottom. Host sends CS low, 0x01 0xAA 0x01 (GEN_CFG1: read register 0xAA), CS high to ADS9324. Host sends CS low, 0x00 0x00 0x00 to ADS9324. ADS9324 returns ..., value[15:8], value[7:0] on SDOUT to Host. Host sends CS high to ADS9324.",
+    "profile": "detail",
+    "width": 638,
+    "source": "docs/model/spi-register-read.seq.yml",
+    "sources": [
+      "docs/model/spi-register-read.seq.yml"
+    ],
+    "kind": "seq",
+    "palette": 2,
+    "print": "landscape",
+    "adaptive": true,
+    "twin": false,
+    "font": ""
   }
 }

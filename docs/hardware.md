@@ -245,15 +245,14 @@ A pin tied on the board needs no hook: RESET tied high leaves `Reset(ResetKind::
 | Data frame | 16 or 24 bits per channel, up to 16 channels, plus an optional DIAG byte and a PRBS byte: at most 50 bytes |
 | Chip select | `kMinCsHighNs` (16 ns) high between frames; one transfer per frame |
 
-```mermaid
-sequenceDiagram
-    participant Host
-    participant ADS9324
-    Host->>ADS9324: CS low, 0x01 0xAA 0x01 (GEN_CFG1: read register 0xAA), CS high
-    Host->>ADS9324: CS low, 0x00 0x00 0x00
-    ADS9324-->>Host: ..., value[15:8], value[7:0] on SDOUT
-    Host->>ADS9324: CS high
-```
+<!-- figure: spi-register-read -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="diagrams/spi-register-read.dark.svg">
+  <img src="diagrams/spi-register-read.svg"
+    alt="A register read on the ADS9324 SPI bus: the host sends the read command inside one chip-select
+    frame, then clocks out a second frame in which the chip returns the value on SDOUT.">
+</picture>
+<!-- /figure -->
 
 On a data readout the driver always sends zeros, so no register is written by accident while the data is clocked
 out (assumption A9).
