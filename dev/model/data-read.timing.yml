@@ -1,0 +1,55 @@
+---
+# Model of the figure 'data-read'. Edit this file; `kokeb-docs figures` draws it. Never edit the SVGs.
+# Every number is a param with the datasheet section and page it comes from (`ref`, a name under refs here or in
+# docs/hardware.yml); a number without one fails the build. Wave characters and keys: docs/figkit.md in ci-tools.
+kind: timing
+id: data-read
+title: One conversion read on SDOUT
+kicker: On the bus
+alt: >-
+  Conversion and data read of the ADS9324 in the 1-lane SDOUT mode: a low pulse on CONVST samples all channels,
+  DRDY rises when the result is ready, and one CS frame clocks the 16 channel words out on SDOUT, AIN1 first.
+reads: >-
+  The five lanes are CONVST, DRDY, CS, SCLK and SDOUT, left to right in time. The falling edge of CONVST samples the
+  16 inputs together; DRDY goes high when the conversion is done, then CS goes low and SCLK clocks the channel words
+  out on SDOUT, AIN1, AIN2 and so on to AIN16, each slot standing for the 16 clocks of one word (AIN3 to AIN15 are
+  left out). CS goes high after the last word, and the next falling edge of CONVST starts the next conversion and
+  takes DRDY low. The table gives each interval with its datasheet value.
+bus: transaction
+refs:
+  timing: {doc: ds, section: "5.6 Timing Requirements", page: 11}
+  switching: {doc: ds, section: "5.7 Switching Characteristics", page: 12}
+  one-lane: {doc: ds, section: "5.8 Timing Diagrams, Figure 5-5", page: 15}
+  lanes: {doc: ds, section: "5.8 Timing Diagrams, Figures 5-2 to 5-4", page: 13}
+  lane-select: {doc: ds, section: "7.3.14 Data Interface, Table 7-11", page: 42}
+signals:
+  - {id: convst, label: CONVST, wave: "101.......|....01...."}
+  - {id: drdy, label: DRDY, wave: "0...1.....|.....0....", tone: amber}
+  - {id: cs, label: CS, wave: "1....0....|...1......"}
+  - {id: sclk, label: SCLK, wave: "0.....nnnn|nnn0......"}
+  - {id: sdout, label: SDOUT, wave: "z.....=.=.|=..z......", data: [AIN1, AIN2, AIN16], tone: teal}
+groups:
+  - {from: 6, to: 14, label: "16 words of 16 bits, AIN1 first", ref: one-lane}
+params:
+  - {id: tpl-cv, symbol: tPL_CV, label: "CONVST pulse width (the table names it the pulse high time)", min: 50,
+     unit: ns, ref: timing}
+  - {id: tconvst, symbol: tCONVST, label: Sampling interval between two CONVST falling edges, min: 1, unit: µs,
+     ref: timing}
+  - {id: td-cvdrdy-hi, symbol: td_CVDRDY_hi, label: "CONVST falling to DRDY rising, equal to tCONV without
+      oversampling", max: 1.25, unit: µs, ref: switching}
+  - {id: tsu-drdycs, symbol: tsu_DRDYCS, label: Setup time from DRDY rising to CS falling, min: 0, unit: ns,
+     ref: timing}
+  - {id: td-cvdrdy-lo, symbol: td_CVDRDY_lo, label: CONVST falling to DRDY falling, max: 350, unit: ns,
+     ref: switching}
+  - {id: fconvst, symbol: fCONVST, label: Sampling frequency, min: 0.1, max: 1, unit: MHz, ref: timing}
+marks:
+  - {param: tpl-cv, signal: convst, from: 1, to: 2}
+  - {param: tconvst, signal: convst, from: 1, to: 15}
+  - {param: td-cvdrdy-hi, signal: drdy, from: 1, to: 4}
+  - {param: td-cvdrdy-lo, signal: drdy, from: 15, to: 16}
+  - {param: tsu-drdycs, signal: cs, from: 4, to: 5}
+notes:
+  - {text: "The 1-lane SDOUT mode is DOUT_LANE_SEL = 3 with ADC_DATA_SDOUT_EN = 1 in GEN_CFG3 (Table 7-11).",
+     ref: lane-select}
+  - {text: "With 2, 4 or 8 lanes on D7 to D0 a 16-bit word takes 8, 4 or 2 clocks instead of 16.", ref: lanes}
+  - {text: "The SCLK, CS and SDOUT times of the register frame apply to this read too.", ref: switching}

@@ -102,72 +102,6 @@
   <meta property="og:description" content="C++20 driver for the TI ADS9324 16-channel, 16-bit, 1 MSPS simultaneous-sampling SAR ADC with integrated PGA and SPI interface">
   <meta property="og:url" content="https://kokeb-labs-drivers.github.io/driver-ads9324/latest/diagrams/">
   <meta name="twitter:card" content="summary">
-  <script>
-(function () {
-  if (typeof mermaid != "undefined" && !(mermaid instanceof Element)) return;
-  var SRC = "https://unpkg.com/mermaid@11.17.2/dist/mermaid.min.js",
-      SRI = "sha384-EOXBFmc3gx5mb+vn0vPvvGqACToJD24hhacX5Yx+8NUUQrHIle/Qi5Bg9o3zKwW2", config = {}, real, loading;
-  var waiting = [], io = null, ahead = false, ENGAGE = ["scroll", "keydown", "pointerdown", "touchstart"];
-  var stub = {
-    initialize: function (c) { config = c || {}; if (real) real.initialize(config); },
-    render: function (id, text) {
-      var el = null, pres = document.querySelectorAll("pre.mermaid:not([data-kb-mermaid])");
-      for (var i = 0; i < pres.length && !el; i++) if (pres[i].textContent === text) el = pres[i];
-      if (el) el.setAttribute("data-kb-mermaid", "");
-      return near(el).then(load).then(function (m) { return m.render(id, text); });
-    }
-  };
-  function load() {
-    return loading || (loading = new Promise(function (resolve, reject) {
-      var s = document.createElement("script");
-      s.src = SRC;
-      s.integrity = SRI;
-      s.crossOrigin = "anonymous";
-      s.onload = function () {
-        real = window.mermaid;
-        window.mermaid = stub;
-        real.initialize(config);
-        resolve(real);
-      };
-      s.onerror = function () { loading = null; reject(new Error("Mermaid did not load")); };
-      document.head.appendChild(s);
-    }));
-  }
-  // One observer for the diagrams still waiting: on the screen only until the reader engages, then a screen ahead.
-  function watch() {
-    if (io) io.disconnect();
-    io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) release(function (w) { return w.el === e.target; });
-      });
-    }, { rootMargin: ahead ? "100% 0px" : "0px" });
-    waiting.forEach(function (w) { io.observe(w.el); });
-  }
-  function release(which) {
-    waiting = waiting.filter(function (w) {
-      if (!which(w)) return true;
-      io.unobserve(w.el);
-      w.go();
-      return false;
-    });
-  }
-  function near(el) {
-    if (real || !el || !("IntersectionObserver" in window)) return Promise.resolve();
-    return new Promise(function (resolve) {
-      waiting.push({ el: el, go: resolve });
-      if (io) io.observe(el); else watch();
-    });
-  }
-  function engaged() {
-    ENGAGE.forEach(function (t) { window.removeEventListener(t, engaged, true); });
-    ahead = true;
-    if (io) watch();
-  }
-  ENGAGE.forEach(function (t) { window.addEventListener(t, engaged, { capture: true, passive: true }); });
-  window.addEventListener("beforeprint", function () { if (io) release(function () { return true; }); });
-  window.mermaid = stub;
-})();
-</script>
 
   </head>
   
@@ -505,6 +439,8 @@
   
     
     
+      
+        
       
         
       
@@ -985,10 +921,43 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#what-the-ads9324-does" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the ADS9324 does
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#ads9324-typical-application" class="md-nav__link">
     <span class="md-ellipsis">
       
         ADS9324: Typical application
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ads9324-spi-register-frame" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADS9324: SPI register frame
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ads9324" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADS9324
       
     </span>
   </a>
@@ -1018,6 +987,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#wiring-typical-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wiring: Typical application
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#one-conversion-read-on-sdout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        One conversion read on SDOUT
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#the-layers-one-of-them-yours" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1040,10 +1031,32 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#configuration-spi-daisy-chain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration SPI daisy chain
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#one-register-read-on-the-spi-bus" class="md-nav__link">
     <span class="md-ellipsis">
       
         One register read on the SPI bus
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#spi-timing-of-one-register-frame" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SPI timing of one register frame
       
     </span>
   </a>
@@ -1090,14 +1103,32 @@ committed figure no longer matches the code. Each figure below lists the files i
 <details class="kb-figure-desc">
 <summary>Figure description and sources</summary>
 <p>The ADS9324's function blocks inside its outline. Arrows between blocks carry signals or data in the direction they point (both ways where they have two heads). The package pins stand on the left and right edges with their numbers, each wired to the block it reaches.</p>
-<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/fbadf25fecf2b587866f23b944a74ca77aad29fd/inc/ads9324.hpp"><code>inc/ads9324.hpp</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/fbadf25fecf2b587866f23b944a74ca77aad29fd/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a>.</p>
+<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324.hpp"><code>inc/ads9324.hpp</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a>.</p>
 </details>
 <p>Hardware description: <a href="../hardware.yml"><code>docs/hardware.yml</code></a></p>
 <p>Drawn from:</p>
 <ul>
 <li><a href="../hardware.yml"><code>docs/hardware.yml</code></a></li>
-<li><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/fbadf25fecf2b587866f23b944a74ca77aad29fd/inc/ads9324.hpp"><code>inc/ads9324.hpp</code></a></li>
-<li><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/fbadf25fecf2b587866f23b944a74ca77aad29fd/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a></li>
+<li><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324.hpp"><code>inc/ads9324.hpp</code></a></li>
+<li><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a></li>
+</ul>
+<h2 id="what-the-ads9324-does">What the ADS9324 does<a class="headerlink" href="#what-the-ads9324-does" title="Permanent link">&para;</a></h2>
+<figure class="kb-figure">
+<img src="chip-capabilities.svg#only-light" alt="Capability map of the ADS9324: Simultaneous sampling (supported): Samples all 16 inputs at one instant on CONVST and reads the whole frame of results; Programmable gain front end (supported): Per channel: ±2.5 V to ±12.5 V, differential, single-ended or open-wire safe, 25 or 325 kHz bandwidth; Reference (supported): The internal 4.096 V reference and buffer, or an external reference; Calibration (supported): System offset, gain and phase per channel, and the chip&#x27;s own ADC gain and offset calibration; Digital filters (supported): Block average, moving average or low-pass FIR filtering of the oversampled results; Window comparator (supported): Flags a channel that leaves a high and low threshold with hysteresis, on the ALARM pin; Data interface (partial): 1, 2, 4 or 8 data lanes, 16- or 24-bit words, the output randomizer and test patterns; Standby (supported): Powers down the analog front end and the reference, then wakes with the registers checked; Reset and identity (supported): Hardware or software reset, the device ID check and the reset-detect flag." width="1200" height="1060" loading="lazy"><img src="chip-capabilities.dark.svg#only-dark" alt="Capability map of the ADS9324: Simultaneous sampling (supported): Samples all 16 inputs at one instant on CONVST and reads the whole frame of results; Programmable gain front end (supported): Per channel: ±2.5 V to ±12.5 V, differential, single-ended or open-wire safe, 25 or 325 kHz bandwidth; Reference (supported): The internal 4.096 V reference and buffer, or an external reference; Calibration (supported): System offset, gain and phase per channel, and the chip&#x27;s own ADC gain and offset calibration; Digital filters (supported): Block average, moving average or low-pass FIR filtering of the oversampled results; Window comparator (supported): Flags a channel that leaves a high and low threshold with hysteresis, on the ALARM pin; Data interface (partial): 1, 2, 4 or 8 data lanes, 16- or 24-bit words, the output randomizer and test patterns; Standby (supported): Powers down the analog front end and the reference, then wakes with the registers checked; Reset and identity (supported): Hardware or software reset, the device ID check and the reset-detect flag." width="1200" height="1060" loading="lazy">
+<figcaption>What the ADS9324 does</figcaption>
+</figure>
+
+<details class="kb-figure-desc">
+<summary>Figure description and sources</summary>
+<p>Each card is one function of the ADS9324: an icon, its name and what it does for the application. The filled pill says how this driver covers it (legend below); the outlined pills are the chip registers behind it. The coverage table in the README gives the driver calls and the datasheet section of each card.</p>
+<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324.hpp"><code>inc/ads9324.hpp</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a>.</p>
+</details>
+<p>Hardware description: <a href="../hardware.yml"><code>docs/hardware.yml</code></a></p>
+<p>Drawn from:</p>
+<ul>
+<li><a href="../hardware.yml"><code>docs/hardware.yml</code></a></li>
+<li><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324.hpp"><code>inc/ads9324.hpp</code></a></li>
+<li><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a></li>
 </ul>
 <h2 id="ads9324-typical-application">ADS9324: Typical application<a class="headerlink" href="#ads9324-typical-application" title="Permanent link">&para;</a></h2>
 <figure class="kb-figure">
@@ -1108,14 +1139,50 @@ committed figure no longer matches the code. Each figure below lists the files i
 <details class="kb-figure-desc">
 <summary>Figure description and sources</summary>
 <p>A schematic. The MCU is on the left, each of its pins level with the chip pin it connects to; above each wire is the hook of the driver's port that drives or reads it. Supply pins point up to their supply and decoupling, ground pins down. Pins on the right carry the loads and the pins tied to a supply or ground; a cross marks a pin left open. A dot is a junction; wires that cross without a dot are not connected.</p>
-<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/fbadf25fecf2b587866f23b944a74ca77aad29fd/inc/ads9324.hpp"><code>inc/ads9324.hpp</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/fbadf25fecf2b587866f23b944a74ca77aad29fd/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a>.</p>
+<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324.hpp"><code>inc/ads9324.hpp</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a>.</p>
 </details>
 <p>Hardware description: <a href="../hardware.yml"><code>docs/hardware.yml</code></a></p>
 <p>Drawn from:</p>
 <ul>
 <li><a href="../hardware.yml"><code>docs/hardware.yml</code></a></li>
-<li><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/fbadf25fecf2b587866f23b944a74ca77aad29fd/inc/ads9324.hpp"><code>inc/ads9324.hpp</code></a></li>
-<li><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/fbadf25fecf2b587866f23b944a74ca77aad29fd/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a></li>
+<li><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324.hpp"><code>inc/ads9324.hpp</code></a></li>
+<li><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a></li>
+</ul>
+<h2 id="ads9324-spi-register-frame">ADS9324: SPI register frame<a class="headerlink" href="#ads9324-spi-register-frame" title="Permanent link">&para;</a></h2>
+<figure class="kb-figure">
+<img src="chip-frame-spi.svg#only-light" alt="SPI register frame of the ADS9324, 24 bits, most significant bit first. Write: register address (bits 23 to 16), 16-bit value (bits 15 to 0); Read: 0x01 (GEN_CFG1) (bits 23 to 16), register to read (bits 15 to 8), 0x01 (read) (bits 7 to 0); Reply: 16-bit register value (bits 23 to 8), 0x00 (bits 7 to 0). Below, the SPI mode 0 waveform of one transfer in the same bit grid." width="1200" height="752" loading="lazy"><img src="chip-frame-spi.dark.svg#only-dark" alt="SPI register frame of the ADS9324, 24 bits, most significant bit first. Write: register address (bits 23 to 16), 16-bit value (bits 15 to 0); Read: 0x01 (GEN_CFG1) (bits 23 to 16), register to read (bits 15 to 8), 0x01 (read) (bits 7 to 0); Reply: 16-bit register value (bits 23 to 8), 0x00 (bits 7 to 0). Below, the SPI mode 0 waveform of one transfer in the same bit grid." width="1200" height="752" loading="lazy">
+<figcaption>ADS9324: SPI register frame</figcaption>
+</figure>
+
+<details class="kb-figure-desc">
+<summary>Figure description and sources</summary>
+<p>One SPI register frame of the ADS9324, 24 bits in a row from the most significant (left, sent first) to the least significant (right). Each row is one kind of frame; each coloured box a field, with its first and last bit number under it. The waveform below draws the select, the clock and the data lines over the same bits.</p>
+<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324.hpp"><code>inc/ads9324.hpp</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a>.</p>
+</details>
+<p>Hardware description: <a href="../hardware.yml"><code>docs/hardware.yml</code></a></p>
+<p>Drawn from:</p>
+<ul>
+<li><a href="../hardware.yml"><code>docs/hardware.yml</code></a></li>
+<li><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324.hpp"><code>inc/ads9324.hpp</code></a></li>
+<li><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a></li>
+</ul>
+<h2 id="ads9324">ADS9324<a class="headerlink" href="#ads9324" title="Permanent link">&para;</a></h2>
+<figure class="kb-figure">
+<img src="chip-hero.svg#only-light" alt="Overview of the ADS9324, a 16-channel, 16-bit SAR ADC that samples all of its inputs at the same instant at up to 1 MSPS, each through its own programmable-gain front end with 1 MΩ input impedance, so sensors and transformers connect without drivers. A MCU talks to it over SPI, 1 to 8 data lanes; it drives DRDY/ALARM line; it reads back Sensors and transformers. Headline figures: 16 x 16-bit inputs sampled at one instant; 1 MSPS on each channel; ±12.5 V widest input range; down to ±2.5 V; 1 MΩ input impedance of the PGA; 4.096 V internal reference, 15 ppm/°C typical; 8 x 8 mm VQFN-64 body." width="1200" height="793" loading="lazy"><img src="chip-hero.dark.svg#only-dark" alt="Overview of the ADS9324, a 16-channel, 16-bit SAR ADC that samples all of its inputs at the same instant at up to 1 MSPS, each through its own programmable-gain front end with 1 MΩ input impedance, so sensors and transformers connect without drivers. A MCU talks to it over SPI, 1 to 8 data lanes; it drives DRDY/ALARM line; it reads back Sensors and transformers. Headline figures: 16 x 16-bit inputs sampled at one instant; 1 MSPS on each channel; ±12.5 V widest input range; down to ±2.5 V; 1 MΩ input impedance of the PGA; 4.096 V internal reference, 15 ppm/°C typical; 8 x 8 mm VQFN-64 body." width="1200" height="793" loading="lazy">
+<figcaption>ADS9324</figcaption>
+</figure>
+
+<details class="kb-figure-desc">
+<summary>Figure description and sources</summary>
+<p>The ADS9324 in the middle, drawn as its VQFN-64 package. On the left the MCU that runs the driver, joined to it by SPI, 1 to 8 data lanes. To the right, what the chip drives, in the order the power flows. Below it, what the chip reads back. The tiles at the bottom are the headline numbers, each with the datasheet section and page it comes from.</p>
+<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324.hpp"><code>inc/ads9324.hpp</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a>.</p>
+</details>
+<p>Hardware description: <a href="../hardware.yml"><code>docs/hardware.yml</code></a></p>
+<p>Drawn from:</p>
+<ul>
+<li><a href="../hardware.yml"><code>docs/hardware.yml</code></a></li>
+<li><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324.hpp"><code>inc/ads9324.hpp</code></a></li>
+<li><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a></li>
 </ul>
 <h2 id="ads9324-package-vqfn-64">ADS9324 package, VQFN-64<a class="headerlink" href="#ads9324-package-vqfn-64" title="Permanent link">&para;</a></h2>
 <figure class="kb-figure">
@@ -1126,14 +1193,14 @@ committed figure no longer matches the code. Each figure below lists the files i
 <details class="kb-figure-desc">
 <summary>Figure description and sources</summary>
 <p>The ADS9324 package seen from the top and, when the height is known, from the side, drawn to scale: 8.0 x 8.0 x 1.0 mm. The arrows carry the datasheet's dimensions, the dot marks pin 1 and the pads are numbered counter-clockwise from it, coloured by the pin's electrical type (legend below). Pads sit centred on each side at the stated pitch; the datasheet's land pattern is the reference for a board.</p>
-<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/fbadf25fecf2b587866f23b944a74ca77aad29fd/inc/ads9324.hpp"><code>inc/ads9324.hpp</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/fbadf25fecf2b587866f23b944a74ca77aad29fd/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a>.</p>
+<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324.hpp"><code>inc/ads9324.hpp</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a>.</p>
 </details>
 <p>Hardware description: <a href="../hardware.yml"><code>docs/hardware.yml</code></a></p>
 <p>Drawn from:</p>
 <ul>
 <li><a href="../hardware.yml"><code>docs/hardware.yml</code></a></li>
-<li><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/fbadf25fecf2b587866f23b944a74ca77aad29fd/inc/ads9324.hpp"><code>inc/ads9324.hpp</code></a></li>
-<li><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/fbadf25fecf2b587866f23b944a74ca77aad29fd/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a></li>
+<li><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324.hpp"><code>inc/ads9324.hpp</code></a></li>
+<li><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a></li>
 </ul>
 <h2 id="ads9324-pinout-vqfn-64">ADS9324 pinout, VQFN-64<a class="headerlink" href="#ads9324-pinout-vqfn-64" title="Permanent link">&para;</a></h2>
 <figure class="kb-figure">
@@ -1144,14 +1211,48 @@ committed figure no longer matches the code. Each figure below lists the files i
 <details class="kb-figure-desc">
 <summary>Figure description and sources</summary>
 <p>The ADS9324 seen from the top, in its VQFN-64 package. Pin 1 is marked by the dot; the numbers run counter-clockwise from it. Each pad is coloured by the pin's electrical type (legend below). Next to it is the pin's name and, in mono, the hook of the driver's port that drives or reads it; a pin without a hook is not used by the driver. The dashed square is the exposed pad.</p>
-<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/fbadf25fecf2b587866f23b944a74ca77aad29fd/inc/ads9324.hpp"><code>inc/ads9324.hpp</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/fbadf25fecf2b587866f23b944a74ca77aad29fd/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a>.</p>
+<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324.hpp"><code>inc/ads9324.hpp</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a>.</p>
 </details>
 <p>Hardware description: <a href="../hardware.yml"><code>docs/hardware.yml</code></a></p>
 <p>Drawn from:</p>
 <ul>
 <li><a href="../hardware.yml"><code>docs/hardware.yml</code></a></li>
-<li><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/fbadf25fecf2b587866f23b944a74ca77aad29fd/inc/ads9324.hpp"><code>inc/ads9324.hpp</code></a></li>
-<li><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/fbadf25fecf2b587866f23b944a74ca77aad29fd/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a></li>
+<li><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324.hpp"><code>inc/ads9324.hpp</code></a></li>
+<li><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a></li>
+</ul>
+<h2 id="wiring-typical-application">Wiring: Typical application<a class="headerlink" href="#wiring-typical-application" title="Permanent link">&para;</a></h2>
+<figure class="kb-figure">
+<img src="chip-wiring-typical.svg#only-light" alt="Wiring of the ADS9324 for the Typical application: MCU SPI SCK to SCLK (Transfer()); MCU SPI MOSI to SDI (Transfer()); MCU SPI MISO to SDOUT (Transfer()); MCU GPIO / CS to CS (Transfer()); MCU GPIO to RESET (GpioSet(CtrlPin::Reset)); MCU GPIO / timer to CONVST (GpioSet(CtrlPin::Convst)); MCU GPIO (IRQ) to DRDY/ALARM (GpioGet(CtrlPin::DrdyAlarm)). Supplies, grounds and the support parts are listed under the drawing." width="1200" height="1067" loading="lazy"><img src="chip-wiring-typical.dark.svg#only-dark" alt="Wiring of the ADS9324 for the Typical application: MCU SPI SCK to SCLK (Transfer()); MCU SPI MOSI to SDI (Transfer()); MCU SPI MISO to SDOUT (Transfer()); MCU GPIO / CS to CS (Transfer()); MCU GPIO to RESET (GpioSet(CtrlPin::Reset)); MCU GPIO / timer to CONVST (GpioSet(CtrlPin::Convst)); MCU GPIO (IRQ) to DRDY/ALARM (GpioGet(CtrlPin::DrdyAlarm)). Supplies, grounds and the support parts are listed under the drawing." width="1200" height="1067" loading="lazy">
+<figcaption>Wiring: Typical application</figcaption>
+</figure>
+
+<details class="kb-figure-desc">
+<summary>Figure description and sources</summary>
+<p>The MCU on the left, the ADS9324 in the middle. Each wire to the chip is coloured by the chip pin's electrical type and carries the net name and the chip pin number above it and, under it, the driver hooks that use it (and any part on the net). The boxes underneath list the supplies, the support parts and the pins this circuit leaves unconnected.</p>
+<p>Drawn from: <a href="../hardware.yml"><code>docs/hardware.yml</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324.hpp"><code>inc/ads9324.hpp</code></a>; <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a>.</p>
+</details>
+<p>Hardware description: <a href="../hardware.yml"><code>docs/hardware.yml</code></a></p>
+<p>Drawn from:</p>
+<ul>
+<li><a href="../hardware.yml"><code>docs/hardware.yml</code></a></li>
+<li><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324.hpp"><code>inc/ads9324.hpp</code></a></li>
+<li><a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a></li>
+</ul>
+<h2 id="one-conversion-read-on-sdout">One conversion read on SDOUT<a class="headerlink" href="#one-conversion-read-on-sdout" title="Permanent link">&para;</a></h2>
+<figure class="kb-figure">
+<img src="data-read.svg#only-light" alt="Conversion and data read of the ADS9324 in the 1-lane SDOUT mode: a low pulse on CONVST samples all channels, DRDY rises when the result is ready, and one CS frame clocks the 16 channel words out on SDOUT, AIN1 first." width="640" height="1245" loading="lazy"><img src="data-read.dark.svg#only-dark" alt="Conversion and data read of the ADS9324 in the 1-lane SDOUT mode: a low pulse on CONVST samples all channels, DRDY rises when the result is ready, and one CS frame clocks the 16 channel words out on SDOUT, AIN1 first." width="640" height="1245" loading="lazy">
+<figcaption>One conversion read on SDOUT</figcaption>
+</figure>
+
+<details class="kb-figure-desc">
+<summary>Figure description and sources</summary>
+<p>The five lanes are CONVST, DRDY, CS, SCLK and SDOUT, left to right in time. The falling edge of CONVST samples the 16 inputs together; DRDY goes high when the conversion is done, then CS goes low and SCLK clocks the channel words out on SDOUT, AIN1, AIN2 and so on to AIN16, each slot standing for the 16 clocks of one word (AIN3 to AIN15 are left out). CS goes high after the last word, and the next falling edge of CONVST starts the next conversion and takes DRDY low. The table gives each interval with its datasheet value.</p>
+<p>Drawn from: <a href="../model/data-read.timing.yml"><code>docs/model/data-read.timing.yml</code></a>.</p>
+</details>
+<p>Hardware description: <a href="../model/data-read.timing.yml"><code>docs/model/data-read.timing.yml</code></a></p>
+<p>Drawn from:</p>
+<ul>
+<li><a href="../model/data-read.timing.yml"><code>docs/model/data-read.timing.yml</code></a></li>
 </ul>
 <h2 id="the-layers-one-of-them-yours">The layers, one of them yours<a class="headerlink" href="#the-layers-one-of-them-yours" title="Permanent link">&para;</a></h2>
 <figure class="kb-figure">
@@ -1162,13 +1263,13 @@ committed figure no longer matches the code. Each figure below lists the files i
 <details class="kb-figure-desc">
 <summary>Figure description and sources</summary>
 <p>Top to bottom, each arrow is a call. Your application calls one object, whose public calls are listed from the umbrella header in inc/. The core turns each call into register reads and writes and hands them to the port contract (the CRTP base in inc/*_interface.hpp), which forwards them, at compile time, to the hooks of the port class you write; your port moves the bytes on the bus. The notes on the right say which layers stay the same on every MCU and which one you write. A library without a port contract has only the first two layers.</p>
-<p>Drawn from: <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/fbadf25fecf2b587866f23b944a74ca77aad29fd/inc/ads9324.hpp"><code>inc/ads9324.hpp</code></a> <code>public calls</code>; <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/fbadf25fecf2b587866f23b944a74ca77aad29fd/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a> <code>SpiInterface</code>; figure module <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/fbadf25fecf2b587866f23b944a74ca77aad29fd/docs/diagrams/figures/driver-layers.py"><code>docs/diagrams/figures/driver-layers.py</code></a>.</p>
+<p>Drawn from: <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324.hpp"><code>inc/ads9324.hpp</code></a> <code>public calls</code>; <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a> <code>SpiInterface</code>; figure module <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/docs/diagrams/figures/driver-layers.py"><code>docs/diagrams/figures/driver-layers.py</code></a>.</p>
 </details>
-<p>Figure module: <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/fbadf25fecf2b587866f23b944a74ca77aad29fd/docs/diagrams/figures/driver-layers.py"><code>docs/diagrams/figures/driver-layers.py</code></a></p>
+<p>Figure module: <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/docs/diagrams/figures/driver-layers.py"><code>docs/diagrams/figures/driver-layers.py</code></a></p>
 <p>Drawn from:</p>
 <ul>
-<li><code>public calls</code> in <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/fbadf25fecf2b587866f23b944a74ca77aad29fd/inc/ads9324.hpp"><code>inc/ads9324.hpp</code></a></li>
-<li><code>SpiInterface</code> in <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/fbadf25fecf2b587866f23b944a74ca77aad29fd/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a></li>
+<li><code>public calls</code> in <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324.hpp"><code>inc/ads9324.hpp</code></a></li>
+<li><code>SpiInterface</code> in <a href="https://github.com/kokeb-labs-drivers/driver-ads9324/blob/8eaf5a673a76778cf0b355ec594f7a4ca996b648/inc/ads9324_spi_interface.hpp"><code>inc/ads9324_spi_interface.hpp</code></a></li>
 </ul>
 <h2 id="one-call-through-the-layers">One call through the layers<a class="headerlink" href="#one-call-through-the-layers" title="Permanent link">&para;</a></h2>
 <figure class="kb-figure">
@@ -1186,6 +1287,22 @@ committed figure no longer matches the code. Each figure below lists the files i
 <ul>
 <li><a href="../model/one-call-through-the-layers.seq.yml"><code>docs/model/one-call-through-the-layers.seq.yml</code></a></li>
 </ul>
+<h2 id="configuration-spi-daisy-chain">Configuration SPI daisy chain<a class="headerlink" href="#configuration-spi-daisy-chain" title="Permanent link">&para;</a></h2>
+<figure class="kb-figure">
+<img src="spi-chain.svg#only-light" alt="Daisy chain of two ADS9324 on the configuration SPI: the host&#x27;s PICO feeds SDI of ADC2, its SDOUT feeds SDI of ADC1 and the SDOUT of ADC1 returns to POCI, with SCLK and CS shared." width="640" height="762" loading="lazy"><img src="spi-chain.dark.svg#only-dark" alt="Daisy chain of two ADS9324 on the configuration SPI: the host&#x27;s PICO feeds SDI of ADC2, its SDOUT feeds SDI of ADC1 and the SDOUT of ADC1 returns to POCI, with SCLK and CS shared." width="640" height="762" loading="lazy">
+<figcaption>Configuration SPI daisy chain</figcaption>
+</figure>
+
+<details class="kb-figure-desc">
+<summary>Figure description and sources</summary>
+<p>The host drives PICO into SDI of ADC2; the SDOUT of ADC2 feeds SDI of ADC1, whose SDOUT returns to the host's POCI. SCLK and CS are rails the host and both ADCs share, so one CS low phase carries a register frame for each device. The driver does not support this chain.</p>
+<p>Drawn from: <a href="../model/spi-chain.topology.yml"><code>docs/model/spi-chain.topology.yml</code></a>.</p>
+</details>
+<p>Hardware description: <a href="../model/spi-chain.topology.yml"><code>docs/model/spi-chain.topology.yml</code></a></p>
+<p>Drawn from:</p>
+<ul>
+<li><a href="../model/spi-chain.topology.yml"><code>docs/model/spi-chain.topology.yml</code></a></li>
+</ul>
 <h2 id="one-register-read-on-the-spi-bus">One register read on the SPI bus<a class="headerlink" href="#one-register-read-on-the-spi-bus" title="Permanent link">&para;</a></h2>
 <figure class="kb-figure">
 <img src="spi-register-read.svg#only-light" alt="A register read on the ADS9324 SPI bus: the host sends the read command inside one chip-select frame, then clocks out a second frame in which the chip returns the value on SDOUT." width="638" height="343" loading="lazy"><img src="spi-register-read.dark.svg#only-dark" alt="A register read on the ADS9324 SPI bus: the host sends the read command inside one chip-select frame, then clocks out a second frame in which the chip returns the value on SDOUT." width="638" height="343" loading="lazy">
@@ -1201,6 +1318,22 @@ committed figure no longer matches the code. Each figure below lists the files i
 <p>Drawn from:</p>
 <ul>
 <li><a href="../model/spi-register-read.seq.yml"><code>docs/model/spi-register-read.seq.yml</code></a></li>
+</ul>
+<h2 id="spi-timing-of-one-register-frame">SPI timing of one register frame<a class="headerlink" href="#spi-timing-of-one-register-frame" title="Permanent link">&para;</a></h2>
+<figure class="kb-figure">
+<img src="spi-timing.svg#only-light" alt="SPI timing of an ADS9324 register frame in mode 0: CS low frames 24 clocks, SDI carries the 8-bit address and the 16-bit value on the rising SCLK edges and SDOUT shifts out the value asked for, with the setup, hold and delay times of the datasheet." width="640" height="1864" loading="lazy"><img src="spi-timing.dark.svg#only-dark" alt="SPI timing of an ADS9324 register frame in mode 0: CS low frames 24 clocks, SDI carries the 8-bit address and the 16-bit value on the rising SCLK edges and SDOUT shifts out the value asked for, with the setup, hold and delay times of the datasheet." width="640" height="1864" loading="lazy">
+<figcaption>SPI timing of one register frame</figcaption>
+</figure>
+
+<details class="kb-figure-desc">
+<summary>Figure description and sources</summary>
+<p>The four lanes are CS, SCLK, SDI and SDOUT, left to right in time. CS goes low and puts the first bit on SDOUT; SCLK idles low and clocks the address bits A7 to A0 and the data bits D15 to D0 in on SDI at its rising edges, while SDOUT gives the 16 bits of the value asked for in the frame before and then zeros (each slot shows its bit number); clocks 3 to 7 and 10 to 23 are left out. CS goes high after the last falling edge, the chip decodes the frame and releases SDOUT. The table gives each interval with its datasheet value.</p>
+<p>Drawn from: <a href="../model/spi-timing.timing.yml"><code>docs/model/spi-timing.timing.yml</code></a>.</p>
+</details>
+<p>Hardware description: <a href="../model/spi-timing.timing.yml"><code>docs/model/spi-timing.timing.yml</code></a></p>
+<p>Drawn from:</p>
+<ul>
+<li><a href="../model/spi-timing.timing.yml"><code>docs/model/spi-timing.timing.yml</code></a></li>
 </ul>
 
 

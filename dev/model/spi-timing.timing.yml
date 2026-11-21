@@ -1,0 +1,70 @@
+---
+# Model of the figure 'spi-timing'. Edit this file; `kokeb-docs figures` draws it. Never edit the SVGs.
+# Every number is a param with the datasheet section and page it comes from (`ref`, a name under refs here or in
+# docs/hardware.yml); a number without one fails the build. Wave characters and keys: docs/figkit.md in ci-tools.
+kind: timing
+id: spi-timing
+title: SPI timing of one register frame
+kicker: On the bus
+alt: >-
+  SPI timing of an ADS9324 register frame in mode 0: CS low frames 24 clocks, SDI carries the 8-bit address and the
+  16-bit value on the rising SCLK edges and SDOUT shifts out the value asked for, with the setup, hold and delay
+  times of the datasheet.
+reads: >-
+  The four lanes are CS, SCLK, SDI and SDOUT, left to right in time. CS goes low and puts the first bit on SDOUT;
+  SCLK idles low and clocks the address bits A7 to A0 and the data bits D15 to D0 in on SDI at its rising edges,
+  while SDOUT gives the 16 bits of the value asked for in the frame before and then zeros (each slot shows its bit
+  number); clocks 3 to 7 and 10 to 23 are left out. CS goes high after the last falling edge, the chip
+  decodes the frame and releases SDOUT. The table gives each interval with its datasheet value.
+bus: spi
+mode: {cpol: 0, cpha: 0}
+refs:
+  timing: {doc: ds, section: "5.6 Timing Requirements", page: 11}
+  switching: {doc: ds, section: "5.7 Switching Characteristics", page: 12}
+signals:
+  - {id: cs, label: CS, wave: "10........1..."}
+  - {id: sclk, label: SCLK, wave: "0.nn|nn|n0....", clock: true}
+  - {id: sdi, label: SDI, wave: "x.==|==|=x....", data: ["7", "6", "0", "15", "0"]}
+  - {id: sdout, label: SDOUT, wave: "z=.=|==|=.z...", data: ["15", "14", "8", "7", zeros], tone: teal}
+groups:
+  - {from: 2, to: 6, label: "8-bit address", ref: regwrite}
+  - {from: 6, to: 9, label: "16-bit data", ref: regwrite}
+params:
+  - {id: tsu-csck, symbol: tsu_CSCK, label: Setup time from CS falling to the first SCLK capture edge, min: 16,
+     unit: ns, ref: timing}
+  - {id: tsclk, symbol: tSCLK, label: SCLK period, min: 16, unit: ns, ref: timing}
+  - {id: tph-sclk, symbol: tPH_SCLK, label: "SCLK high time, as a fraction of tSCLK", min: 0.45, max: 0.55,
+     unit: tSCLK, ref: timing}
+  - {id: tpl-sclk, symbol: tPL_SCLK, label: "SCLK low time, as a fraction of tSCLK", min: 0.45, max: 0.55,
+     unit: tSCLK, ref: timing}
+  - {id: tsu-ckdi, symbol: tsu_CKDI, label: Setup time of SDI before the SCLK rising edge, min: 3, unit: ns,
+     ref: timing}
+  - {id: tht-ckdi, symbol: tht_CKDI, label: Hold time of SDI after the SCLK rising edge, min: 1, unit: ns,
+     ref: timing}
+  - {id: tht-csck, symbol: tht_CSCK, label: Hold time from the last SCLK falling edge to CS rising, min: 16,
+     unit: ns, ref: timing}
+  - {id: thi-cs, symbol: thi_CS, label: CS high time between two frames, min: 16, unit: ns, ref: timing}
+  - {id: td-csdo, symbol: td_CSDO, label: Delay from CS falling to data valid on SDOUT, max: 16, unit: ns,
+     ref: switching}
+  - {id: td-ckdo, symbol: td_CKDO, label: Delay from the SCLK launch edge to the next bit valid on SDOUT, max: 17,
+     unit: ns, ref: switching}
+  - {id: tvt-ckdo, symbol: tvt_CKDO, label: Time the previous SDOUT bit stays valid after the SCLK launch edge,
+     min: 7.6, unit: ns, ref: switching}
+  - {id: tdz-csdo, symbol: tdz_CSDO, label: Delay from CS rising to SDOUT high impedance, max: 7.5, unit: ns,
+     ref: switching}
+  - {id: fsclk, symbol: fSCLK, label: SCLK frequency, max: 60, unit: MHz, ref: timing}
+marks:
+  - {param: tsu-csck, signal: cs, from: 1, to: 2.5}
+  - {param: tht-csck, signal: cs, from: 9, to: 10}
+  - {param: thi-cs, signal: cs, from: 10, to: 13}
+  - {param: tsclk, signal: sclk, from: 2.5, to: 3.5}
+  - {param: tsu-ckdi, signal: sdi, from: 2, to: 2.5}
+  - {param: tht-ckdi, signal: sdi, from: 2.5, to: 3}
+  - {param: td-csdo, signal: sdout, from: 1, to: 1.5}
+  - {param: td-ckdo, signal: sdout, from: 3, to: 3.5}
+  - {param: tdz-csdo, signal: sdout, from: 10, to: 10.5}
+notes:
+  - {text: "The datasheet names no SPI mode and calls the SDOUT edge the launch edge; the driver takes the falling
+      SCLK edge as the launch edge, as drawn."}
+  - {text: "SDOUT drives the value read for 16 clocks and zeros for the last 8 (Table 7-17).", ref: regread}
+  - {text: "The SDOUT times of 5.7 are given at IOVDD = 1.7 V to 1.9 V.", ref: switching}
