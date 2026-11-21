@@ -57,13 +57,13 @@ topics:
     section: 5.6 Timing Requirements; 5.7 Switching Characteristics
     page: 11
     driver: "`kMaxClockHz`, `kMinCsHighNs`, `kConvstMinHz`, `kConvstMaxHz`"
-    docs: [porting, hardware]
+    docs: [porting, hardware, bus]
   - topic: Timing diagrams, DRDY and the data frame
     doc: ds
     section: 5.8 Timing Diagrams
     page: 12
     driver: "`WaitDataReady()`, `ReadFrame()`, `ConversionTimeUs()`"
-    docs: [porting, contract]
+    docs: [porting, contract, bus]
   - topic: Analog inputs and the input clamps
     doc: ds
     section: 7.3.1 Analog Inputs; 7.3.2 Input Clamp Protection Circuit
@@ -135,13 +135,13 @@ topics:
     section: 7.3.14 Data Interface; 7.3.14.1 ADC Channel Modes, Table 7-12
     page: 42
     driver: "`Interface`, `ChannelSelect`, `FrameChannels()`, `FrameBytes()`, `SetChannels()`"
-    docs: [configuration, architecture, porting]
+    docs: [configuration, architecture, porting, bus]
   - topic: Daisy chain (not supported in v1)
     doc: ds
     section: 7.3.14.2 Daisy Chain
     page: 43
     driver: "`DaisyChain`, `Error::Unsupported`"
-    docs: [limitations]
+    docs: [limitations, bus]
   - topic: Diagnostic byte and the randomizer
     doc: ds
     section: 7.3.14.3 Diagnostic Flags; 7.3.14.4 ADC Output Data Randomizer
@@ -177,7 +177,7 @@ topics:
     section: 7.5 Programming; 7.5.1 Register Write Operation; 7.5.2 Register Read Operation
     page: 50
     driver: "`SpiInterface`, `detail::RegisterBus`, `ReadRegister()`"
-    docs: [architecture, porting]
+    docs: [architecture, porting, bus]
   - topic: Initialization example, single lane on SDOUT
     doc: ds
     section: 7.5.3 Initialization Example - Single Lane Mode on SDOUT

@@ -103,6 +103,23 @@
       "inc/ads9324_spi_interface.hpp"
     ]
   },
+  "data-read": {
+    "title": "One conversion read on SDOUT",
+    "alt": "Conversion and data read of the ADS9324 in the 1-lane SDOUT mode: a low pulse on CONVST samples all channels, DRDY rises when the result is ready, and one CS frame clocks the 16 channel words out on SDOUT, AIN1 first.",
+    "description": "The five lanes are CONVST, DRDY, CS, SCLK and SDOUT, left to right in time. The falling edge of CONVST samples the 16 inputs together; DRDY goes high when the conversion is done, then CS goes low and SCLK clocks the channel words out on SDOUT, AIN1, AIN2 and so on to AIN16, each slot standing for the 16 clocks of one word (AIN3 to AIN15 are left out). CS goes high after the last word, and the next falling edge of CONVST starts the next conversion and takes DRDY low. The table gives each interval with its datasheet value.",
+    "profile": "phone",
+    "width": 640,
+    "source": "docs/model/data-read.timing.yml",
+    "sources": [
+      "docs/model/data-read.timing.yml"
+    ],
+    "kind": "timing",
+    "palette": 2,
+    "print": "landscape",
+    "adaptive": true,
+    "twin": true,
+    "font": ""
+  },
   "driver-layers": {
     "title": "The layers, one of them yours",
     "alt": "Layer diagram: your application calls the ADS9324 core, which sends register reads and writes through the SPI port contract to the port class you write, which drives the chip; the core and the contract are the same on every MCU.",
@@ -132,6 +149,23 @@
     "twin": false,
     "font": ""
   },
+  "spi-chain": {
+    "title": "Configuration SPI daisy chain",
+    "alt": "Daisy chain of two ADS9324 on the configuration SPI: the host's PICO feeds SDI of ADC2, its SDOUT feeds SDI of ADC1 and the SDOUT of ADC1 returns to POCI, with SCLK and CS shared.",
+    "description": "The host drives PICO into SDI of ADC2; the SDOUT of ADC2 feeds SDI of ADC1, whose SDOUT returns to the host's POCI. SCLK and CS are rails the host and both ADCs share, so one CS low phase carries a register frame for each device. The driver does not support this chain.",
+    "profile": "phone",
+    "width": 640,
+    "source": "docs/model/spi-chain.topology.yml",
+    "sources": [
+      "docs/model/spi-chain.topology.yml"
+    ],
+    "kind": "topology",
+    "palette": 2,
+    "print": "landscape",
+    "adaptive": true,
+    "twin": false,
+    "font": ""
+  },
   "spi-register-read": {
     "title": "One register read on the SPI bus",
     "alt": "A register read on the ADS9324 SPI bus: the host sends the read command inside one chip-select frame, then clocks out a second frame in which the chip returns the value on SDOUT.",
@@ -147,6 +181,23 @@
     "print": "landscape",
     "adaptive": true,
     "twin": false,
+    "font": ""
+  },
+  "spi-timing": {
+    "title": "SPI timing of one register frame",
+    "alt": "SPI timing of an ADS9324 register frame in mode 0: CS low frames 24 clocks, SDI carries the 8-bit address and the 16-bit value on the rising SCLK edges and SDOUT shifts out the value asked for, with the setup, hold and delay times of the datasheet.",
+    "description": "The four lanes are CS, SCLK, SDI and SDOUT, left to right in time. CS goes low and puts the first bit on SDOUT; SCLK idles low and clocks the address bits A7 to A0 and the data bits D15 to D0 in on SDI at its rising edges, while SDOUT gives the 16 bits of the value asked for in the frame before and then zeros (each slot shows its bit number); clocks 3 to 7 and 10 to 23 are left out. CS goes high after the last falling edge, the chip decodes the frame and releases SDOUT. The table gives each interval with its datasheet value.",
+    "profile": "phone",
+    "width": 640,
+    "source": "docs/model/spi-timing.timing.yml",
+    "sources": [
+      "docs/model/spi-timing.timing.yml"
+    ],
+    "kind": "timing",
+    "palette": 2,
+    "print": "landscape",
+    "adaptive": true,
+    "twin": true,
     "font": ""
   }
 }

@@ -179,6 +179,24 @@ Drawn from:
 - [`inc/ads9324.hpp`](../../inc/ads9324.hpp)
 - [`inc/ads9324_spi_interface.hpp`](../../inc/ads9324_spi_interface.hpp)
 
+## One conversion read on SDOUT
+
+<!-- figure: data-read -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="data-read.dark.svg">
+  <img src="data-read.svg"
+    alt="Conversion and data read of the ADS9324 in the 1-lane SDOUT mode: a low pulse on CONVST samples all
+    channels, DRDY rises when the result is ready, and one CS frame clocks the 16 channel words out on
+    SDOUT, AIN1 first.">
+</picture>
+<!-- /figure -->
+
+Hardware description: [`docs/model/data-read.timing.yml`](../model/data-read.timing.yml)
+
+Drawn from:
+
+- [`docs/model/data-read.timing.yml`](../model/data-read.timing.yml)
+
 ## The layers, one of them yours
 
 <!-- figure: driver-layers -->
@@ -215,6 +233,23 @@ Drawn from:
 
 - [`docs/model/one-call-through-the-layers.seq.yml`](../model/one-call-through-the-layers.seq.yml)
 
+## Configuration SPI daisy chain
+
+<!-- figure: spi-chain -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="spi-chain.dark.svg">
+  <img src="spi-chain.svg"
+    alt="Daisy chain of two ADS9324 on the configuration SPI: the host's PICO feeds SDI of ADC2, its SDOUT
+    feeds SDI of ADC1 and the SDOUT of ADC1 returns to POCI, with SCLK and CS shared.">
+</picture>
+<!-- /figure -->
+
+Hardware description: [`docs/model/spi-chain.topology.yml`](../model/spi-chain.topology.yml)
+
+Drawn from:
+
+- [`docs/model/spi-chain.topology.yml`](../model/spi-chain.topology.yml)
+
 ## One register read on the SPI bus
 
 <!-- figure: spi-register-read -->
@@ -231,3 +266,21 @@ Hardware description: [`docs/model/spi-register-read.seq.yml`](../model/spi-regi
 Drawn from:
 
 - [`docs/model/spi-register-read.seq.yml`](../model/spi-register-read.seq.yml)
+
+## SPI timing of one register frame
+
+<!-- figure: spi-timing -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="spi-timing.dark.svg">
+  <img src="spi-timing.svg"
+    alt="SPI timing of an ADS9324 register frame in mode 0: CS low frames 24 clocks, SDI carries the 8-bit
+    address and the 16-bit value on the rising SCLK edges and SDOUT shifts out the value asked for, with
+    the setup, hold and delay times of the datasheet.">
+</picture>
+<!-- /figure -->
+
+Hardware description: [`docs/model/spi-timing.timing.yml`](../model/spi-timing.timing.yml)
+
+Drawn from:
+
+- [`docs/model/spi-timing.timing.yml`](../model/spi-timing.timing.yml)
