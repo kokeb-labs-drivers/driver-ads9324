@@ -1,5 +1,11 @@
 # ADS9324 Driver
 
+<!-- generated: chip-summary -->
+The **ADS9324** is a 16-channel, 16-bit SAR ADC that samples all of its inputs at the same instant at up to 1 MSPS, each
+through its own programmable-gain front end with 1 MΩ input impedance, so sensors and transformers connect without
+drivers (1 Features, [p. 1](https://www.ti.com/lit/ds/symlink/ads9324.pdf#page=1)).
+<!-- /generated -->
+
 C++20 driver for the TI ADS9324 16-channel, 16-bit, 1 MSPS simultaneous-sampling SAR ADC with integrated PGA and
 SPI interface.
 
@@ -10,37 +16,63 @@ SPI interface.
 **Documentation: [`docs/`](docs/index.md)**, with the API reference built by Doxygen ([how](docs/api-reference.md)).
 The site at <https://kokeb-labs-drivers.github.io/driver-ads9324/> opens when the repository is public.
 
-
-The ADS9324 samples sixteen analog inputs at the same instant, each through its own programmable-gain front end
-with 1 MΩ input impedance, and converts them to 16 bits at up to 1 MSPS per channel: current and voltage channels
-of a power-system monitor, a bank of sensors, a test instrument. This driver starts the chip safely, programs every
-channel (range, differential or single-ended, bandwidth, offset, gain, window), reads and decodes a whole frame of
-16 samples in any lane and word format, runs the window comparator and the ADC calibration, and turns the chip's
-flags into errors you can act on. It runs on any MCU: you give it a small class that moves SPI frames and waits,
-and it does the rest.
-
-<!-- figure: driver-layers -->
+<!-- figure: chip-hero -->
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/driver-layers.dark.svg">
-  <img src="docs/diagrams/driver-layers.svg"
-    alt="Layer diagram: your application calls the ADS9324 core, which sends register reads and writes
-    through the SPI port contract to the port class you write, which drives the chip; the core and the
-    contract are the same on every MCU.">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/chip-hero.dark.svg">
+  <img src="docs/diagrams/chip-hero.svg"
+    alt="Overview of the ADS9324, a 16-channel, 16-bit SAR ADC that samples all of its inputs at the same
+    instant at up to 1 MSPS, each through its own programmable-gain front end with 1 MΩ input impedance,
+    so sensors and transformers connect without drivers. A MCU talks to it over SPI, 1 to 8 data lanes;
+    it drives DRDY/ALARM line; it reads back Sensors and transformers. Headline figures: 16 x 16-bit
+    inputs sampled at one instant; 1 MSPS on each channel; ±12.5 V widest input range; down to ±2.5 V; 1
+    MΩ input impedance of the PGA; 4.096 V internal reference, 15 ppm/°C typical; 8 x 8 mm VQFN-64 body.">
 </picture>
 <!-- /figure -->
 
-## At a glance
+## What it does
 
-| | |
-| --- | --- |
-| **Chip** | TI ADS9324, 16 channels, 16 bits, simultaneous sampling; 64-pin VQFN |
-| **Converts** | ±2.5 V to ±12.5 V per channel, differential or single-ended; up to 1 MSPS per channel; internal 4.096 V or external reference |
-| **Bus** | SPI mode 0, 24-bit register frames up to 60 MHz (reads on SDOUT up to 29 MHz); data on 1, 2, 4 or 8 lanes, 16 or 24 bits per channel |
-| **Also drives** | CONVST, RESET and DRDY/ALARM through optional port hooks; filters, window comparator, calibration, standby |
-| **Driver** | Header-only C++20; no heap, exceptions, RTTI, floating point or virtual calls; every call returns `Result<T>` |
-| **Runs on** | Any MCU with SPI and a C++20 compiler; the host example runs on any PC ([Platforms](docs/platforms.md)) |
-| **Not supported** | The daisy chain ([Limitations](docs/limitations.md)) |
-| **Status** | 0.1.0, **not verified on hardware**: host-tested against a model of the chip and fuzzed; bench steps in [Limitations](docs/limitations.md) |
+<!-- figure: chip-capabilities -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/chip-capabilities.dark.svg">
+  <img src="docs/diagrams/chip-capabilities.svg"
+    alt="Capability map of the ADS9324: Simultaneous sampling (supported): Samples all 16 inputs at one
+    instant on CONVST and reads the whole frame of results; Programmable gain front end (supported): Per
+    channel: ±2.5 V to ±12.5 V, differential, single-ended or open-wire safe, 25 or 325 kHz bandwidth;
+    Reference (supported): The internal 4.096 V reference and buffer, or an external reference;
+    Calibration (supported): System offset, gain and phase per channel, and the chip's own ADC gain and
+    offset calibration; Digital filters (supported): Block average, moving average or low-pass FIR
+    filtering of the oversampled results; Window comparator (supported): Flags a channel that leaves a
+    high and low threshold with hysteresis, on the ALARM pin; Data interface (partial): 1, 2, 4 or 8
+    data lanes, 16- or 24-bit words, the output randomizer and test patterns; Standby (supported):
+    Powers down the analog front end and the reference, then wakes with the registers checked; Reset and
+    identity (supported): Hardware or software reset, the device ID check and the reset-detect flag.">
+</picture>
+<!-- /figure -->
+
+## Where it is used
+
+<!-- generated: chip-uses -->
+- Substation automation
+- Motor protection relays and contactors
+- Motor control current sensing
+- Industrial automation
+- Test and measurement
+
+Uses named by the datasheet (2 Applications, [p. 1](https://www.ti.com/lit/ds/symlink/ads9324.pdf#page=1)).
+<!-- /generated -->
+
+## Inside the chip
+
+<!-- figure: chip-blocks -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/chip-blocks.dark.svg">
+  <img src="docs/diagrams/chip-blocks.svg"
+    alt="Block diagram of the ADS9324: its function blocks, how they connect and which package pins reach
+    each block.">
+</picture>
+<!-- /figure -->
+
+## Pins and wiring
 
 <!-- figure: chip-pinout -->
 <picture>
@@ -51,21 +83,47 @@ and it does the rest.
 </picture>
 <!-- /figure -->
 
+<!-- figure: chip-wiring-typical -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/chip-wiring-typical.dark.svg">
+  <img src="docs/diagrams/chip-wiring-typical.svg"
+    alt="Wiring of the ADS9324 for the Typical application: MCU SPI SCK to SCLK (Transfer()); MCU SPI MOSI to
+    SDI (Transfer()); MCU SPI MISO to SDOUT (Transfer()); MCU GPIO / CS to CS (Transfer()); MCU GPIO to
+    RESET (GpioSet(CtrlPin::Reset)); MCU GPIO / timer to CONVST (GpioSet(CtrlPin::Convst)); MCU GPIO
+    (IRQ) to DRDY/ALARM (GpioGet(CtrlPin::DrdyAlarm)). Supplies, grounds and the support parts are
+    listed under the drawing.">
+</picture>
+<!-- /figure -->
+
+| MCU | ADS9324 | Notes |
+| --- | --- | --- |
+| SPI SCLK | SCLK | Mode 0, up to 60 MHz; 1 MHz for bring-up on jumper wires |
+| SPI MOSI | SDI | |
+| SPI MISO | SDOUT | The registers and, by default, the data of all 16 channels |
+| GPIO (chip select) | CS | Low for the whole frame: one transfer per frame |
+| GPIO | CONVST | Idles high; the falling edge samples all 16 channels |
+| GPIO | RESET | Idles high; optional |
+| GPIO input | DRDY/ALARM | Optional: the driver waits for the result on it |
+| 5 V, 1.8 V, 1.7 V to 3.6 V | AVDD_5V, AVDD_1V8, IOVDD | 1 µF and 0.1 µF at each supply pin |
+| GND | GND, REFM, exposed pad | |
+
+<!-- figure: chip-frame-spi -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/chip-frame-spi.dark.svg">
+  <img src="docs/diagrams/chip-frame-spi.svg"
+    alt="SPI register frame of the ADS9324, 24 bits, most significant bit first. Write: register address
+    (bits 23 to 16), 16-bit value (bits 15 to 0); Read: 0x01 (GEN_CFG1) (bits 23 to 16), register to
+    read (bits 15 to 8), 0x01 (read) (bits 7 to 0); Reply: 16-bit register value (bits 23 to 8), 0x00
+    (bits 7 to 0). Below, the SPI mode 0 waveform of one transfer in the same bit grid.">
+</picture>
+<!-- /figure -->
+
 <!-- figure: chip-outline -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/chip-outline.dark.svg">
   <img src="docs/diagrams/chip-outline.svg"
     alt="Outline of the ADS9324 in VQFN-64 drawn to scale from above: body 8.0 x 8.0 x 1.0 mm, pitch 0.4 mm,
     64 pins and an exposed pad.">
-</picture>
-<!-- /figure -->
-
-<!-- figure: chip-blocks -->
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/chip-blocks.dark.svg">
-  <img src="docs/diagrams/chip-blocks.svg"
-    alt="Block diagram of the ADS9324: its function blocks, how they connect and which package pins reach
-    each block.">
 </picture>
 <!-- /figure -->
 
@@ -89,6 +147,104 @@ Also sold as:
 
 From [`docs/hardware.yml`](docs/hardware.yml); pins, circuits and the block diagram: [Hardware](docs/hardware.md).
 <!-- /generated -->
+
+## Quick start
+
+**1. Wire it** as in [Pins and wiring](#pins-and-wiring).
+
+**2. Write the port**: a class with `EnsureInitialized()` (bring the bus up), `Transfer()` (one full-duplex frame
+with CS low) and `DelayUs()`, about 20 lines on most SDKs, plus `GpioSet()` for CONVST and RESET.
+[Porting](docs/porting.md) has the contract and a complete example.
+
+**3. Read a frame:**
+
+<!-- generated: quickstart-code -->
+```cpp
+#include "ads9324.hpp"
+
+// This minimal port has no CONVST pin hook, so the example drives CONVST itself
+// (see "Drive CONVST yourself" on the API guide); ReadFrame() reads the latest
+// conversion.
+int read_ain1_microvolts(MyPort& port, int32_t& microvolts) {
+  ads9324::ADS9324<MyPort> adc(port); // no I/O yet
+
+  if (auto r = adc.EnsureInitialized(); !r) { // 1. bus up, reset, DEVICE_ID, Config{}
+    return static_cast<int>(r.error);         //    Bus, Timeout or DeviceIdMismatch: check wiring
+  }
+  // ... pulse CONVST here, wait 1.25 us ...
+  const auto frame = adc.ReadFrame(); // 2. one frame: all 16 channels, 16 bits each
+  if (!frame) {
+    return static_cast<int>(frame.error); //    DataMismatch: SDOUT stuck low or high
+  }
+  microvolts = frame.value.microvolts[0]; // 3. AIN1, +-5 V range, in microvolts
+  return 0;
+}
+```
+<!-- /generated -->
+
+`EnsureInitialized()` is the only call that starts the chip. Every other call returns `Error::NotInitialized`
+until it has succeeded, and no read ever starts the chip on its own.
+
+## Driver coverage
+
+<!-- generated: chip-coverage -->
+| Capability | What the chip does | Driver API | Registers | Status | Datasheet |
+| --- | --- | --- | --- | --- | --- |
+| [Simultaneous sampling](docs/api-guide.md) | Samples all 16 inputs at one instant on CONVST and reads the whole frame of results | `Convert`, `WaitDataReady`, `ReadFrame`, `MeasureOnce`, `SetChannels` | `ANA_CFG2` | Supported | 7.1, [p. 24](https://www.ti.com/lit/ds/symlink/ads9324.pdf#page=24) |
+| [Programmable gain front end](docs/configuration.md) | Per channel: ±2.5 V to ±12.5 V, differential, single-ended or open-wire safe, 25 or 325 kHz bandwidth | `SetInput`, `Input` | `PGA_CONFIG`, `PGA_BW_SEL` | Supported | 7.3.4, [p. 26](https://www.ti.com/lit/ds/symlink/ads9324.pdf#page=26) |
+| [Reference](docs/configuration.md) | The internal 4.096 V reference and buffer, or an external reference | `SetReference`, `ReferenceSource` | `ANA_CFG1` | Supported | 7.3.6, [p. 28](https://www.ti.com/lit/ds/symlink/ads9324.pdf#page=28) |
+| [Calibration](docs/api-guide.md) | System offset, gain and phase per channel, and the chip's own ADC gain and offset calibration | `SetInput`, `RunAdcCalibration`, `IsCalibrationBusy` | `OFS`, `GAN`, `PHASE_DELAY`, `ADC_CAL` | Supported | 7.3.8, [p. 31](https://www.ti.com/lit/ds/symlink/ads9324.pdf#page=31) |
+| [Digital filters](docs/configuration.md) | Block average, moving average or low-pass FIR filtering of the oversampled results | `SetFilter`, `Filter` | `DIG_FILTER`, `GEN_CFG5` | Supported | 7.3.11, [p. 34](https://www.ti.com/lit/ds/symlink/ads9324.pdf#page=34) |
+| [Window comparator](docs/api-guide.md) | Flags a channel that leaves a high and low threshold with hysteresis, on the ALARM pin | `SetAlarm`, `ReadWindowFlags`, `ClearWindowFlags`, `ReadAlarmPin` | `DWC_CFG`, `DWC_TH`, `DWC_HYS`, `DWC_FLAG`, `DRDY_ALARM_SEL` | Supported | 7.3.12, [p. 39](https://www.ti.com/lit/ds/symlink/ads9324.pdf#page=39) |
+| [Data interface](docs/limitations.md) | 1, 2, 4 or 8 data lanes, 16- or 24-bit words, the output randomizer and test patterns (the daisy chain is not supported) | `SetInterface`, `CaptureLanes`, `SetTestPattern`, `RunDataPathSelfTest` | `GEN_CFG3`, `XOR_BITS_CTL`, `TP_CFG`, `GEN_CFG4` | Partial | 7.3.14, [p. 42](https://www.ti.com/lit/ds/symlink/ads9324.pdf#page=42) |
+| [Standby](docs/api-guide.md) | Powers down the analog front end and the reference, then wakes with the registers checked | `PowerDown`, `Wake`, `IsPoweredDown` | `PDN_CTL` | Supported | 7.4, [p. 49](https://www.ti.com/lit/ds/symlink/ads9324.pdf#page=49) |
+| [Reset and identity](docs/contract.md) | Hardware or software reset, the device ID check and the reset-detect flag | `Reset`, `Identify`, `EnsureInitialized` | `GEN_CFG1`, `DEVICE_ID`, `DIAG_CTRL` | Supported | 7.4, [p. 49](https://www.ti.com/lit/ds/symlink/ads9324.pdf#page=49) |
+
+**Supported**: the driver covers it and a host test checks it; **Partial**: covered in part; the coverage map says which
+part.
+
+From [`docs/hardware.yml`](docs/hardware.yml); `kokeb-docs hardware --check` confirms that every API name is in
+`inc/ads9324.hpp`, `inc/ads9324_types.hpp` and every register in `inc/ads9324_registers.hpp`.
+<!-- /generated -->
+
+This driver starts the chip safely, programs every channel (range, differential or single-ended, bandwidth, offset,
+gain, window), reads and decodes a whole frame of 16 samples in any lane and word format, runs the window comparator and
+the ADC calibration, and turns the chip's flags into errors you can act on. It runs on any MCU: you give it a small
+class that moves SPI frames and waits, and it does the rest.
+
+| | |
+| --- | --- |
+| **Bus** | SPI mode 0, 24-bit register frames up to 60 MHz (reads on SDOUT up to 29 MHz); data on 1, 2, 4 or 8 lanes, 16 or 24 bits per channel |
+| **Also drives** | CONVST, RESET and DRDY/ALARM through optional port hooks; filters, window comparator, calibration, standby |
+| **Driver** | Header-only C++20; no heap, exceptions, RTTI, floating point or virtual calls; every call returns `Result<T>` |
+| **Runs on** | Any MCU with SPI and a C++20 compiler; the host example runs on any PC ([Platforms](docs/platforms.md)) |
+| **Not supported** | The daisy chain ([Limitations](docs/limitations.md)) |
+| **Status** | 0.1.0, **not verified on hardware**: host-tested against a model of the chip and fuzzed; bench steps in [Limitations](docs/limitations.md) |
+
+- Brings the chip up with a reset, a DEVICE_ID check and a settle wait; nothing touches the chip before that
+  succeeds.
+- Sets every channel's range, type, bandwidth, offset, gain, phase delay and window, in the right register of the
+  mirrored AIN9 to AIN16 bank, writing only what changed.
+- Reads a frame on SDOUT or on 2, 4 or 8 lanes, 16 or 24 bits, with the DIAG byte and the randomizer, and returns
+  codes and microvolts per channel; a stuck or floating line is an error, not data.
+- Runs the digital filters, the window comparator with its alarm pin, the ADC calibration and standby.
+- Checks a configuration before any bus traffic, at run time or at compile time.
+- Returns `Result<T>` with an `Error` from every call: no exceptions, no heap, no RTTI, no virtual calls.
+
+## Documentation
+
+| Page | Read it when you want to |
+| --- | --- |
+| [Quickstart](docs/quickstart.md) | Go from a bare chip to 16 channel readings on your MCU |
+| [Hardware](docs/hardware.md) | Wire it, check the supplies, the reference, the bus settings and the timing |
+| [Porting](docs/porting.md) | Write the port class for your MCU's SDK |
+| [API guide](docs/api-guide.md) | Use each call: start, configure, measure, set windows, calibrate, handle errors |
+| [Configuration](docs/configuration.md) | Choose every setting |
+| [Limitations](docs/limitations.md) | See what is out of scope, assumed or not verified on hardware |
+| [Troubleshooting](docs/troubleshooting.md) | Find the cause of an error or a wrong reading |
+| [Contract](docs/contract.md) | Know exactly what the driver promises, needs and returns |
+| [Datasheet map](docs/datasheet.md) | Find the datasheet section behind each part of the driver |
+| [API reference](docs/api-reference.md) | Look up a class or member (Doxygen; built by CI and locally) |
 
 ## Datasheet
 
@@ -136,67 +292,6 @@ You need git, CMake 3.16+ and a C++20 compiler (GCC 10+, Clang 13+ or MSVC 2022)
 
 To run the whole test suite instead: `cmake -S . -B build -DADS9324_BUILD_TESTS=ON && cmake --build build && ctest
 --test-dir build`.
-
-## Use it on your MCU
-
-**1. Wire it** ([Hardware](docs/hardware.md) has every pin, the timing and the power):
-
-| MCU | ADS9324 | Notes |
-| --- | --- | --- |
-| SPI SCLK | SCLK | Mode 0, up to 60 MHz; 1 MHz for bring-up on jumper wires |
-| SPI MOSI | SDI | |
-| SPI MISO | SDOUT | The registers and, by default, the data of all 16 channels |
-| GPIO (chip select) | CS | Low for the whole frame: one transfer per frame |
-| GPIO | CONVST | Idles high; the falling edge samples all 16 channels |
-| GPIO | RESET | Idles high; optional |
-| GPIO input | DRDY/ALARM | Optional: the driver waits for the result on it |
-| 5 V, 1.8 V, 1.7 V to 3.6 V | AVDD_5V, AVDD_1V8, IOVDD | 1 µF and 0.1 µF at each supply pin |
-| GND | GND, REFM, exposed pad | |
-
-**2. Write the port**: a class with `EnsureInitialized()` (bring the bus up), `Transfer()` (one full-duplex frame
-with CS low) and `DelayUs()`, about 20 lines on most SDKs, plus `GpioSet()` for CONVST and RESET.
-[Porting](docs/porting.md) has the contract and a complete example.
-
-**3. Read a frame:**
-
-<!-- generated: quickstart-code -->
-```cpp
-#include "ads9324.hpp"
-
-// This minimal port has no CONVST pin hook, so the example drives CONVST itself
-// (see "Drive CONVST yourself" on the API guide); ReadFrame() reads the latest
-// conversion.
-int read_ain1_microvolts(MyPort& port, int32_t& microvolts) {
-  ads9324::ADS9324<MyPort> adc(port); // no I/O yet
-
-  if (auto r = adc.EnsureInitialized(); !r) { // 1. bus up, reset, DEVICE_ID, Config{}
-    return static_cast<int>(r.error);         //    Bus, Timeout or DeviceIdMismatch: check wiring
-  }
-  // ... pulse CONVST here, wait 1.25 us ...
-  const auto frame = adc.ReadFrame(); // 2. one frame: all 16 channels, 16 bits each
-  if (!frame) {
-    return static_cast<int>(frame.error); //    DataMismatch: SDOUT stuck low or high
-  }
-  microvolts = frame.value.microvolts[0]; // 3. AIN1, +-5 V range, in microvolts
-  return 0;
-}
-```
-<!-- /generated -->
-
-`EnsureInitialized()` is the only call that starts the chip. Every other call returns `Error::NotInitialized`
-until it has succeeded, and no read ever starts the chip on its own.
-
-## What it does
-
-- Brings the chip up with a reset, a DEVICE_ID check and a settle wait; nothing touches the chip before that
-  succeeds.
-- Sets every channel's range, type, bandwidth, offset, gain, phase delay and window, in the right register of the
-  mirrored AIN9 to AIN16 bank, writing only what changed.
-- Reads a frame on SDOUT or on 2, 4 or 8 lanes, 16 or 24 bits, with the DIAG byte and the randomizer, and returns
-  codes and microvolts per channel; a stuck or floating line is an error, not data.
-- Runs the digital filters, the window comparator with its alarm pin, the ADC calibration and standby.
-- Checks a configuration before any bus traffic, at run time or at compile time.
-- Returns `Result<T>` with an `Error` from every call: no exceptions, no heap, no RTTI, no virtual calls.
 
 ## Add it to your project
 
@@ -256,21 +351,6 @@ details.
    ```
 
 The target is `ads9324::ads9324` every way, so switching later changes nothing else.
-
-## Documentation
-
-| Page | Read it when you want to |
-| --- | --- |
-| [Quickstart](docs/quickstart.md) | Go from a bare chip to 16 channel readings on your MCU |
-| [Hardware](docs/hardware.md) | Wire it, check the supplies, the reference, the bus settings and the timing |
-| [Porting](docs/porting.md) | Write the port class for your MCU's SDK |
-| [API guide](docs/api-guide.md) | Use each call: start, configure, measure, set windows, calibrate, handle errors |
-| [Configuration](docs/configuration.md) | Choose every setting |
-| [Limitations](docs/limitations.md) | See what is out of scope, assumed or not verified on hardware |
-| [Troubleshooting](docs/troubleshooting.md) | Find the cause of an error or a wrong reading |
-| [Contract](docs/contract.md) | Know exactly what the driver promises, needs and returns |
-| [Datasheet map](docs/datasheet.md) | Find the datasheet section behind each part of the driver |
-| [API reference](docs/api-reference.md) | Look up a class or member (Doxygen; built by CI and locally) |
 
 ## Tests and quality
 

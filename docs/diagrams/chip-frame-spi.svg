@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="752" viewBox="0 0 1200 752" role="img" aria-labelledby="chip-frame-spi-title chip-frame-spi-desc" font-family="Inter, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+<title id="chip-frame-spi-title">ADS9324: SPI register frame</title>
+<desc id="chip-frame-spi-desc">SPI register frame of the ADS9324, 24 bits, most significant bit first. Write: register address (bits 23 to 16), 16-bit value (bits 15 to 0); Read: 0x01 (GEN_CFG1) (bits 23 to 16), register to read (bits 15 to 8), 0x01 (read) (bits 7 to 0); Reply: 16-bit register value (bits 23 to 8), 0x00 (bits 7 to 0). Below, the SPI mode 0 waveform of one transfer in the same bit grid.</desc>
+<rect x="0.5" y="0.5" width="1199" height="751" rx="16" fill="#FFFFFF" stroke="#E2E7EE"/>
+<text x="32" y="46.8" font-size="16" font-weight="700" letter-spacing="1.2" fill="#7A360E">ON THE BUS</text>
+<text x="32" y="85.6" font-size="32" font-weight="700" fill="#0E1726">ADS9324: SPI register frame</text>
+<text x="32" y="115.4" font-size="18" fill="#566070">A register write or read command is one 24-bit frame with CS low; the value read comes in the next frame. 24 bits, sent most</text>
+<text x="32" y="141.5" font-size="18" fill="#566070">significant bit first. Datasheet: 7.5.1 Register Write Operation, Figure 7-41, p. 50.</text>
+<rect x="32" y="157.5" width="1136" height="1" fill="#E2E7EE"/>
+<path d="M212 485.5 L220 485.5 L220 507.5 L1160 507.5 L1160 485.5 L1168 485.5" fill="none" stroke="#2B3442" stroke-width="2"/>
+<path d="M212 553.5 L240 553.5 L258.8 553.5 L258.8 531.5 L277.5 531.5 L277.5 553.5 L296.2 553.5 L296.2 531.5 L315 531.5 L315 553.5 L333.8 553.5 L333.8 531.5 L352.5 531.5 L352.5 553.5 L371.2 553.5 L371.2 531.5 L390 531.5 L390 553.5 L408.8 553.5 L408.8 531.5 L427.5 531.5 L427.5 553.5 L446.2 553.5 L446.2 531.5 L465 531.5 L465 553.5 L483.8 553.5 L483.8 531.5 L502.5 531.5 L502.5 553.5 L521.2 553.5 L521.2 531.5 L540 531.5 L540 553.5 L558.8 553.5 L558.8 531.5 L577.5 531.5 L577.5 553.5 L596.2 553.5 L596.2 531.5 L615 531.5 L615 553.5 L633.8 553.5 L633.8 531.5 L652.5 531.5 L652.5 553.5 L671.2 553.5 L671.2 531.5 L690 531.5 L690 553.5 L708.8 553.5 L708.8 531.5 L727.5 531.5 L727.5 553.5 L746.2 553.5 L746.2 531.5 L765 531.5 L765 553.5 L783.8 553.5 L783.8 531.5 L802.5 531.5 L802.5 553.5 L821.2 553.5 L821.2 531.5 L840 531.5 L840 553.5 L858.8 553.5 L858.8 531.5 L877.5 531.5 L877.5 553.5 L896.2 553.5 L896.2 531.5 L915 531.5 L915 553.5 L933.8 553.5 L933.8 531.5 L952.5 531.5 L952.5 553.5 L971.2 553.5 L971.2 531.5 L990 531.5 L990 553.5 L1008.8 553.5 L1008.8 531.5 L1027.5 531.5 L1027.5 553.5 L1046.2 553.5 L1046.2 531.5 L1065 531.5 L1065 553.5 L1083.8 553.5 L1083.8 531.5 L1102.5 531.5 L1102.5 553.5 L1121.2 553.5 L1121.2 531.5 L1140 531.5 L1140 553.5 L1168 553.5" fill="none" stroke="#2563EB" stroke-width="2"/>
+<path d="M212 588.5 L240 588.5" fill="none" stroke="#8893A2" stroke-width="1.6"/>
+<path d="M1140 588.5 L1168 588.5" fill="none" stroke="#8893A2" stroke-width="1.6"/>
+<path d="M212 634.5 L240 634.5" fill="none" stroke="#8893A2" stroke-width="1.6"/>
+<path d="M1140 634.5 L1168 634.5" fill="none" stroke="#8893A2" stroke-width="1.6"/>
+<rect x="240" y="209.5" width="300" height="46" rx="6" fill="#EAF2FF" stroke="#2563EB" stroke-width="1.4"/>
+<rect x="540" y="209.5" width="600" height="46" rx="6" fill="#EAF7EF" stroke="#15803D" stroke-width="1.4"/>
+<rect x="240" y="297.5" width="300" height="46" rx="6" fill="#FFF5E3" stroke="#C26A05" stroke-width="1.4"/>
+<rect x="540" y="297.5" width="300" height="46" rx="6" fill="#EAF2FF" stroke="#2563EB" stroke-width="1.4"/>
+<rect x="840" y="297.5" width="300" height="46" rx="6" fill="#FFF5E3" stroke="#C26A05" stroke-width="1.4"/>
+<rect x="240" y="385.5" width="600" height="46" rx="6" fill="#EAF7EF" stroke="#15803D" stroke-width="1.4"/>
+<rect x="840" y="385.5" width="300" height="46" rx="6" fill="#F1F4F8" stroke="#64748B" stroke-width="1.4"/>
+<path d="M240 588.5 L245 576.5 L535 576.5 L540 588.5 L535 600.5 L245 600.5 Z" fill="#FFF5E3" stroke="#C26A05" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M540 588.5 L545 576.5 L835 576.5 L840 588.5 L835 600.5 L545 600.5 Z" fill="#EAF2FF" stroke="#2563EB" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M840 588.5 L845 576.5 L1135 576.5 L1140 588.5 L1135 600.5 L845 600.5 Z" fill="#FFF5E3" stroke="#C26A05" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M240 634.5 L245 622.5 L835 622.5 L840 634.5 L835 646.5 L245 646.5 Z" fill="#EAF7EF" stroke="#15803D" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M840 634.5 L845 622.5 L1135 622.5 L1140 634.5 L1135 646.5 L845 646.5 Z" fill="#F1F4F8" stroke="#64748B" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="240" y="191.5" font-size="16" fill="#566070">MSB, sent first</text>
+<text x="1140" y="191.5" font-size="16" text-anchor="end" fill="#566070">LSB, sent last</text>
+<text x="32" y="230.5" font-size="20" font-weight="700" fill="#0E1726">Write</text>
+<text x="32" y="250.5" font-size="16" fill="#566070">SDI</text>
+<text x="390" y="238.6" font-size="17" font-weight="600" text-anchor="middle" fill="#1E429F">register address</text>
+<text x="242" y="275.5" font-size="16" fill="#566070">23</text>
+<text x="538" y="275.5" font-size="16" text-anchor="end" fill="#566070">16</text>
+<text x="840" y="238.6" font-size="17" font-weight="600" text-anchor="middle" fill="#14532D">16-bit value</text>
+<text x="542" y="275.5" font-size="16" fill="#566070">15</text>
+<text x="1138" y="275.5" font-size="16" text-anchor="end" fill="#566070">0</text>
+<text x="32" y="318.5" font-size="20" font-weight="700" fill="#0E1726">Read</text>
+<text x="32" y="338.5" font-size="16" fill="#566070">SDI, address 0x01</text>
+<text x="390" y="326.6" font-size="17" font-weight="600" text-anchor="middle" fill="#8A3C0B">0x01 (GEN_CFG1)</text>
+<text x="242" y="363.5" font-size="16" fill="#566070">23</text>
+<text x="538" y="363.5" font-size="16" text-anchor="end" fill="#566070">16</text>
+<text x="690" y="326.6" font-size="17" font-weight="600" text-anchor="middle" fill="#1E429F">register to read</text>
+<text x="542" y="363.5" font-size="16" fill="#566070">15</text>
+<text x="838" y="363.5" font-size="16" text-anchor="end" fill="#566070">8</text>
+<text x="990" y="326.6" font-size="17" font-weight="600" text-anchor="middle" fill="#8A3C0B">0x01 (read)</text>
+<text x="842" y="363.5" font-size="16" fill="#566070">7</text>
+<text x="1138" y="363.5" font-size="16" text-anchor="end" fill="#566070">0</text>
+<text x="32" y="406.5" font-size="20" font-weight="700" fill="#0E1726">Reply</text>
+<text x="32" y="426.5" font-size="16" fill="#566070">SDOUT, next frame</text>
+<text x="540" y="414.6" font-size="17" font-weight="600" text-anchor="middle" fill="#14532D">16-bit register value</text>
+<text x="242" y="451.5" font-size="16" fill="#566070">23</text>
+<text x="838" y="451.5" font-size="16" text-anchor="end" fill="#566070">8</text>
+<text x="990" y="414.6" font-size="17" font-weight="600" text-anchor="middle" fill="#334155">0x00</text>
+<text x="842" y="451.5" font-size="16" fill="#566070">7</text>
+<text x="1138" y="451.5" font-size="16" text-anchor="end" fill="#566070">0</text>
+<text x="32" y="502.3" font-size="16" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" fill="#0E1726">CS</text>
+<text x="32" y="548.3" font-size="16" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" fill="#0E1726">SCLK</text>
+<text x="32" y="594.3" font-size="16" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" fill="#0E1726">SDI</text>
+<text x="390" y="594.3" font-size="16" font-weight="600" text-anchor="middle" fill="#8A3C0B">0x01</text>
+<text x="690" y="594.3" font-size="16" font-weight="600" text-anchor="middle" fill="#1E429F">address</text>
+<text x="990" y="594.3" font-size="16" font-weight="600" text-anchor="middle" fill="#8A3C0B">0x01</text>
+<text x="32" y="640.3" font-size="16" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" fill="#0E1726">SDOUT</text>
+<text x="540" y="640.3" font-size="16" font-weight="600" text-anchor="middle" fill="#14532D">16-bit register value</text>
+<text x="990" y="640.3" font-size="16" font-weight="600" text-anchor="middle" fill="#334155">0x00</text>
+<text x="32" y="682.3" font-size="16" fill="#566070">SPI mode 0: SCLK idles low; the chip samples its input on the rising edge and changes its output after the falling edge. CS stays low for the</text>
+<text x="32" y="705.5" font-size="16" fill="#566070">whole frame.</text>
+</svg>

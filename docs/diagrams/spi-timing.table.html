@@ -1,0 +1,22 @@
+<details>
+<summary>Table form of this figure</summary>
+<table>
+<caption>SPI timing of one register frame</caption>
+<thead><tr><th scope="col">Symbol</th><th scope="col">Parameter</th><th scope="col">Min</th><th scope="col">Typ</th><th scope="col">Max</th><th scope="col">Unit</th><th scope="col">Datasheet</th></tr></thead>
+<tbody>
+<tr><th scope="row">tsu_CSCK</th><td>Setup time from CS falling to the first SCLK capture edge</td><td>16</td><td></td><td></td><td>ns</td><td>5.6 Timing Requirements, p. 11</td></tr>
+<tr><th scope="row">tSCLK</th><td>SCLK period</td><td>16</td><td></td><td></td><td>ns</td><td>5.6 Timing Requirements, p. 11</td></tr>
+<tr><th scope="row">tPH_SCLK</th><td>SCLK high time, as a fraction of tSCLK</td><td>0.45</td><td></td><td>0.55</td><td>tSCLK</td><td>5.6 Timing Requirements, p. 11</td></tr>
+<tr><th scope="row">tPL_SCLK</th><td>SCLK low time, as a fraction of tSCLK</td><td>0.45</td><td></td><td>0.55</td><td>tSCLK</td><td>5.6 Timing Requirements, p. 11</td></tr>
+<tr><th scope="row">tsu_CKDI</th><td>Setup time of SDI before the SCLK rising edge</td><td>3</td><td></td><td></td><td>ns</td><td>5.6 Timing Requirements, p. 11</td></tr>
+<tr><th scope="row">tht_CKDI</th><td>Hold time of SDI after the SCLK rising edge</td><td>1</td><td></td><td></td><td>ns</td><td>5.6 Timing Requirements, p. 11</td></tr>
+<tr><th scope="row">tht_CSCK</th><td>Hold time from the last SCLK falling edge to CS rising</td><td>16</td><td></td><td></td><td>ns</td><td>5.6 Timing Requirements, p. 11</td></tr>
+<tr><th scope="row">thi_CS</th><td>CS high time between two frames</td><td>16</td><td></td><td></td><td>ns</td><td>5.6 Timing Requirements, p. 11</td></tr>
+<tr><th scope="row">td_CSDO</th><td>Delay from CS falling to data valid on SDOUT</td><td></td><td></td><td>16</td><td>ns</td><td>5.7 Switching Characteristics, p. 12</td></tr>
+<tr><th scope="row">td_CKDO</th><td>Delay from the SCLK launch edge to the next bit valid on SDOUT</td><td></td><td></td><td>17</td><td>ns</td><td>5.7 Switching Characteristics, p. 12</td></tr>
+<tr><th scope="row">tvt_CKDO</th><td>Time the previous SDOUT bit stays valid after the SCLK launch edge</td><td>7.6</td><td></td><td></td><td>ns</td><td>5.7 Switching Characteristics, p. 12</td></tr>
+<tr><th scope="row">tdz_CSDO</th><td>Delay from CS rising to SDOUT high impedance</td><td></td><td></td><td>7.5</td><td>ns</td><td>5.7 Switching Characteristics, p. 12</td></tr>
+<tr><th scope="row">fSCLK</th><td>SCLK frequency</td><td></td><td></td><td>60</td><td>MHz</td><td>5.6 Timing Requirements, p. 11</td></tr>
+</tbody>
+</table>
+</details>

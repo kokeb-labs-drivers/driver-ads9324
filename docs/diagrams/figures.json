@@ -12,12 +12,51 @@
       "inc/ads9324_spi_interface.hpp"
     ]
   },
+  "chip-capabilities": {
+    "title": "What the ADS9324 does",
+    "alt": "Capability map of the ADS9324: Simultaneous sampling (supported): Samples all 16 inputs at one instant on CONVST and reads the whole frame of results; Programmable gain front end (supported): Per channel: ±2.5 V to ±12.5 V, differential, single-ended or open-wire safe, 25 or 325 kHz bandwidth; Reference (supported): The internal 4.096 V reference and buffer, or an external reference; Calibration (supported): System offset, gain and phase per channel, and the chip's own ADC gain and offset calibration; Digital filters (supported): Block average, moving average or low-pass FIR filtering of the oversampled results; Window comparator (supported): Flags a channel that leaves a high and low threshold with hysteresis, on the ALARM pin; Data interface (partial): 1, 2, 4 or 8 data lanes, 16- or 24-bit words, the output randomizer and test patterns; Standby (supported): Powers down the analog front end and the reference, then wakes with the registers checked; Reset and identity (supported): Hardware or software reset, the device ID check and the reset-detect flag.",
+    "description": "Each card is one function of the ADS9324: an icon, its name and what it does for the application. The filled pill says how this driver covers it (legend below); the outlined pills are the chip registers behind it. The coverage table in the README gives the driver calls and the datasheet section of each card.",
+    "profile": "overview",
+    "width": 1200,
+    "source": "docs/hardware.yml",
+    "sources": [
+      "docs/hardware.yml",
+      "inc/ads9324.hpp",
+      "inc/ads9324_spi_interface.hpp"
+    ]
+  },
   "chip-circuit-typical": {
     "title": "ADS9324: Typical application",
     "alt": "Schematic of the ADS9324 typical application: the chip with U2 MCU, C1 capacitor 1 µF, C2 capacitor 0.1 µF, C3 capacitor 1 µF, C4 capacitor 0.1 µF, C5 capacitor 1 µF, C6 capacitor 0.1 µF, C7 capacitor 4.7 µF, C8 capacitor 1 µF, C9 capacitor 1 µF, R1 resistor 1 kΩ, R2 resistor 1 kΩ, C10 capacitor 10 nF; the MCU wires carry the port hooks GpioGet(CtrlPin::DrdyAlarm), GpioSet(CtrlPin::Convst), GpioSet(CtrlPin::Reset), Transfer().",
     "description": "A schematic. The MCU is on the left, each of its pins level with the chip pin it connects to; above each wire is the hook of the driver's port that drives or reads it. Supply pins point up to their supply and decoupling, ground pins down. Pins on the right carry the loads and the pins tied to a supply or ground; a cross marks a pin left open. A dot is a junction; wires that cross without a dot are not connected.",
     "profile": "detail",
     "width": 1464,
+    "source": "docs/hardware.yml",
+    "sources": [
+      "docs/hardware.yml",
+      "inc/ads9324.hpp",
+      "inc/ads9324_spi_interface.hpp"
+    ]
+  },
+  "chip-frame-spi": {
+    "title": "ADS9324: SPI register frame",
+    "alt": "SPI register frame of the ADS9324, 24 bits, most significant bit first. Write: register address (bits 23 to 16), 16-bit value (bits 15 to 0); Read: 0x01 (GEN_CFG1) (bits 23 to 16), register to read (bits 15 to 8), 0x01 (read) (bits 7 to 0); Reply: 16-bit register value (bits 23 to 8), 0x00 (bits 7 to 0). Below, the SPI mode 0 waveform of one transfer in the same bit grid.",
+    "description": "One SPI register frame of the ADS9324, 24 bits in a row from the most significant (left, sent first) to the least significant (right). Each row is one kind of frame; each coloured box a field, with its first and last bit number under it. The waveform below draws the select, the clock and the data lines over the same bits.",
+    "profile": "overview",
+    "width": 1200,
+    "source": "docs/hardware.yml",
+    "sources": [
+      "docs/hardware.yml",
+      "inc/ads9324.hpp",
+      "inc/ads9324_spi_interface.hpp"
+    ]
+  },
+  "chip-hero": {
+    "title": "ADS9324",
+    "alt": "Overview of the ADS9324, a 16-channel, 16-bit SAR ADC that samples all of its inputs at the same instant at up to 1 MSPS, each through its own programmable-gain front end with 1 MΩ input impedance, so sensors and transformers connect without drivers. A MCU talks to it over SPI, 1 to 8 data lanes; it drives DRDY/ALARM line; it reads back Sensors and transformers. Headline figures: 16 x 16-bit inputs sampled at one instant; 1 MSPS on each channel; ±12.5 V widest input range; down to ±2.5 V; 1 MΩ input impedance of the PGA; 4.096 V internal reference, 15 ppm/°C typical; 8 x 8 mm VQFN-64 body.",
+    "description": "The ADS9324 in the middle, drawn as its VQFN-64 package. On the left the MCU that runs the driver, joined to it by SPI, 1 to 8 data lanes. To the right, what the chip drives, in the order the power flows. Below it, what the chip reads back. The tiles at the bottom are the headline numbers, each with the datasheet section and page it comes from.",
+    "profile": "overview",
+    "width": 1200,
     "source": "docs/hardware.yml",
     "sources": [
       "docs/hardware.yml",
@@ -51,6 +90,36 @@
       "inc/ads9324_spi_interface.hpp"
     ]
   },
+  "chip-wiring-typical": {
+    "title": "Wiring: Typical application",
+    "alt": "Wiring of the ADS9324 for the Typical application: MCU SPI SCK to SCLK (Transfer()); MCU SPI MOSI to SDI (Transfer()); MCU SPI MISO to SDOUT (Transfer()); MCU GPIO / CS to CS (Transfer()); MCU GPIO to RESET (GpioSet(CtrlPin::Reset)); MCU GPIO / timer to CONVST (GpioSet(CtrlPin::Convst)); MCU GPIO (IRQ) to DRDY/ALARM (GpioGet(CtrlPin::DrdyAlarm)). Supplies, grounds and the support parts are listed under the drawing.",
+    "description": "The MCU on the left, the ADS9324 in the middle. Each wire to the chip is coloured by the chip pin's electrical type and carries the net name and the chip pin number above it and, under it, the driver hooks that use it (and any part on the net). The boxes underneath list the supplies, the support parts and the pins this circuit leaves unconnected.",
+    "profile": "overview",
+    "width": 1200,
+    "source": "docs/hardware.yml",
+    "sources": [
+      "docs/hardware.yml",
+      "inc/ads9324.hpp",
+      "inc/ads9324_spi_interface.hpp"
+    ]
+  },
+  "data-read": {
+    "title": "One conversion read on SDOUT",
+    "alt": "Conversion and data read of the ADS9324 in the 1-lane SDOUT mode: a low pulse on CONVST samples all channels, DRDY rises when the result is ready, and one CS frame clocks the 16 channel words out on SDOUT, AIN1 first.",
+    "description": "The five lanes are CONVST, DRDY, CS, SCLK and SDOUT, left to right in time. The falling edge of CONVST samples the 16 inputs together; DRDY goes high when the conversion is done, then CS goes low and SCLK clocks the channel words out on SDOUT, AIN1, AIN2 and so on to AIN16, each slot standing for the 16 clocks of one word (AIN3 to AIN15 are left out). CS goes high after the last word, and the next falling edge of CONVST starts the next conversion and takes DRDY low. The table gives each interval with its datasheet value.",
+    "profile": "phone",
+    "width": 640,
+    "source": "docs/model/data-read.timing.yml",
+    "sources": [
+      "docs/model/data-read.timing.yml"
+    ],
+    "kind": "timing",
+    "palette": 2,
+    "print": "landscape",
+    "adaptive": true,
+    "twin": true,
+    "font": ""
+  },
   "driver-layers": {
     "title": "The layers, one of them yours",
     "alt": "Layer diagram: your application calls the ADS9324 core, which sends register reads and writes through the SPI port contract to the port class you write, which drives the chip; the core and the contract are the same on every MCU.",
@@ -80,6 +149,23 @@
     "twin": false,
     "font": ""
   },
+  "spi-chain": {
+    "title": "Configuration SPI daisy chain",
+    "alt": "Daisy chain of two ADS9324 on the configuration SPI: the host's PICO feeds SDI of ADC2, its SDOUT feeds SDI of ADC1 and the SDOUT of ADC1 returns to POCI, with SCLK and CS shared.",
+    "description": "The host drives PICO into SDI of ADC2; the SDOUT of ADC2 feeds SDI of ADC1, whose SDOUT returns to the host's POCI. SCLK and CS are rails the host and both ADCs share, so one CS low phase carries a register frame for each device. The driver does not support this chain.",
+    "profile": "phone",
+    "width": 640,
+    "source": "docs/model/spi-chain.topology.yml",
+    "sources": [
+      "docs/model/spi-chain.topology.yml"
+    ],
+    "kind": "topology",
+    "palette": 2,
+    "print": "landscape",
+    "adaptive": true,
+    "twin": false,
+    "font": ""
+  },
   "spi-register-read": {
     "title": "One register read on the SPI bus",
     "alt": "A register read on the ADS9324 SPI bus: the host sends the read command inside one chip-select frame, then clocks out a second frame in which the chip returns the value on SDOUT.",
@@ -95,6 +181,23 @@
     "print": "landscape",
     "adaptive": true,
     "twin": false,
+    "font": ""
+  },
+  "spi-timing": {
+    "title": "SPI timing of one register frame",
+    "alt": "SPI timing of an ADS9324 register frame in mode 0: CS low frames 24 clocks, SDI carries the 8-bit address and the 16-bit value on the rising SCLK edges and SDOUT shifts out the value asked for, with the setup, hold and delay times of the datasheet.",
+    "description": "The four lanes are CS, SCLK, SDI and SDOUT, left to right in time. CS goes low and puts the first bit on SDOUT; SCLK idles low and clocks the address bits A7 to A0 and the data bits D15 to D0 in on SDI at its rising edges, while SDOUT gives the 16 bits of the value asked for in the frame before and then zeros (each slot shows its bit number); clocks 3 to 7 and 10 to 23 are left out. CS goes high after the last falling edge, the chip decodes the frame and releases SDOUT. The table gives each interval with its datasheet value.",
+    "profile": "phone",
+    "width": 640,
+    "source": "docs/model/spi-timing.timing.yml",
+    "sources": [
+      "docs/model/spi-timing.timing.yml"
+    ],
+    "kind": "timing",
+    "palette": 2,
+    "print": "landscape",
+    "adaptive": true,
+    "twin": true,
     "font": ""
   }
 }

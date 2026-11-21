@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="762" viewBox="0 0 640 762" role="img" aria-labelledby="spi-chain-title spi-chain-desc" font-family="Inter, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+<title id="spi-chain-title">Configuration SPI daisy chain</title>
+<desc id="spi-chain-desc">Daisy chain of two ADS9324 on the configuration SPI: the host's PICO feeds SDI of ADC2, its SDOUT feeds SDI of ADC1 and the SDOUT of ADC1 returns to POCI, with SCLK and CS shared.</desc>
+<defs><marker id="spi-chain-arrow-brand-strong" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#F4B942"/></marker></defs>
+<rect x="0.5" y="0.5" width="639" height="761" rx="16" fill="#0E131A" stroke="#283241"/>
+<text x="32" y="44.4" font-size="13" font-weight="700" letter-spacing="1.2" fill="#F8D27A">SEVERAL DEVICES</text>
+<text x="32" y="76.2" font-size="24" font-weight="700" fill="#E8EDF3">Configuration SPI daisy chain</text>
+<text x="32" y="102.7" font-size="15" fill="#9AA6B5">Datasheet: 7.3.14.2 Daisy Chain, Figure 7-29, p. 43.</text>
+<rect x="32" y="118.7" width="576" height="1" fill="#252F3C"/>
+<path d="M106 241.9 L106 282.9" fill="none" stroke="#F4B942" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#spi-chain-arrow-brand-strong)"/>
+<path d="M106 384.9 L106 425.9" fill="none" stroke="#F4B942" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#spi-chain-arrow-brand-strong)"/>
+<path d="M106 527.9 L106 535.4 Q106 542.9 98.5 542.9 L48 542.9 Q40 542.9 40 534.9 L40 209.9 Q40 201.9 48 201.9 L59 201.9" fill="none" stroke="#F4B942" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#spi-chain-arrow-brand-strong)"/>
+<path d="M530.4 172.9 L530.4 516.9" fill="none" stroke="#D2DAE4" stroke-width="2.2"/>
+<path d="M478.5 180.9 L530.4 180.9" fill="none" stroke="#D2DAE4" stroke-width="1.8"/>
+<path d="M478.5 301.9 L530.4 301.9" fill="none" stroke="#D2DAE4" stroke-width="1.8"/>
+<path d="M478.5 444.9 L530.4 444.9" fill="none" stroke="#D2DAE4" stroke-width="1.8"/>
+<path d="M582.1 172.9 L582.1 516.9" fill="none" stroke="#D2DAE4" stroke-width="2.2"/>
+<path d="M478.5 190.9 L582.1 190.9" fill="none" stroke="#D2DAE4" stroke-width="1.8"/>
+<path d="M478.5 311.9 L582.1 311.9" fill="none" stroke="#D2DAE4" stroke-width="1.8"/>
+<path d="M478.5 454.9 L582.1 454.9" fill="none" stroke="#D2DAE4" stroke-width="1.8"/>
+<rect x="62" y="164.9" width="416.5" height="74" rx="10" fill="#13233A" stroke="#60A5FA" stroke-width="1.4"/>
+<rect x="62" y="172.9" width="4" height="58" rx="2" fill="#60A5FA"/>
+<rect x="62" y="285.9" width="416.5" height="96" rx="10" fill="#0F2A28" stroke="#2BB3A3" stroke-width="1.4"/>
+<rect x="62" y="293.9" width="4" height="80" rx="2" fill="#2BB3A3"/>
+<rect x="62" y="428.9" width="416.5" height="96" rx="10" fill="#0F2A28" stroke="#2BB3A3" stroke-width="1.4"/>
+<rect x="62" y="436.9" width="4" height="80" rx="2" fill="#2BB3A3"/>
+<rect x="32" y="579.9" width="576" height="152.1" rx="10" fill="#1B232E" stroke="#3A4656" stroke-width="1"/>
+<text x="82" y="193.3" font-size="17" font-weight="700" fill="#BFDBFE">Host</text>
+<text x="82" y="221.1" font-size="15" fill="#D2DAE4">SPI controller</text>
+<text x="82" y="314.3" font-size="17" font-weight="700" fill="#A7F3E6">ADC2</text>
+<text x="82" y="342.1" font-size="15" fill="#D2DAE4">DAISY_CHN_LOC = 1</text>
+<text x="82" y="363.8" font-size="15" fill="#D2DAE4">first on PICO</text>
+<text x="82" y="457.3" font-size="17" font-weight="700" fill="#A7F3E6">ADC1</text>
+<text x="82" y="485.1" font-size="15" fill="#D2DAE4">DAISY_CHN_LOC = 0</text>
+<text x="82" y="506.8" font-size="15" fill="#D2DAE4">last in the chain</text>
+<text x="118" y="267.8" font-size="15" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" fill="#D2DAE4">PICO → SDI</text>
+<text x="118" y="410.8" font-size="15" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" fill="#D2DAE4">SDOUT → SDI</text>
+<text x="118" y="548.3" font-size="15" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" fill="#D2DAE4">SDOUT → POCI</text>
+<text x="530.4" y="164.9" font-size="14" font-weight="700" text-anchor="middle" fill="#E8EDF3">SCLK</text>
+<circle cx="530.4" cy="180.9" r="3.6" fill="#D2DAE4"/>
+<circle cx="530.4" cy="301.9" r="3.6" fill="#D2DAE4"/>
+<circle cx="530.4" cy="444.9" r="3.6" fill="#D2DAE4"/>
+<text x="582.1" y="164.9" font-size="14" font-weight="700" text-anchor="middle" fill="#E8EDF3">CS</text>
+<circle cx="582.1" cy="190.9" r="3.6" fill="#D2DAE4"/>
+<circle cx="582.1" cy="311.9" r="3.6" fill="#D2DAE4"/>
+<circle cx="582.1" cy="454.9" r="3.6" fill="#D2DAE4"/>
+<text x="46" y="608.3" font-size="17" font-weight="700" fill="#E2E8F0">Limits</text>
+<text x="46" y="628.8" font-size="15" fill="#E2E8F0">A register read or write takes 32 SCLK per device in the chain instead of</text>
+<text x="46" y="650.5" font-size="15" fill="#E2E8F0">24 (7.3.14.2, p. 43). Every device needs DAISY_CHN_NUM,</text>
+<text x="46" y="672.2" font-size="15" fill="#E2E8F0">DAISY_CHN_LOC and DOUT_LANE_SEL set, then DAISY_CHN_EN = 1</text>
+<text x="46" y="694" font-size="15" fill="#E2E8F0">(7.3.14.2, p. 43). Data on 1, 2 or 4 lanes only; not with the data on</text>
+<text x="46" y="715.8" font-size="15" fill="#E2E8F0">SDOUT (7.3.14.2, p. 43).</text>
+</svg>
